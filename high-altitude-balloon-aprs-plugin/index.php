@@ -253,6 +253,10 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
         </h4>
     <?php } ?>
         <div id="habat_map_<?= $guid; ?>"></div>
+
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment-with-locales.min.js"
+                integrity="sha256-QwcluVRoJ33LzMJ+COPYcydsAIJzcxCwsa0zA5JRGEc=" crossorigin="anonymous"></script>
+
         <script>
             var habat_map_since_<?= $guid; ?> = '<?= $args['since']; ?>';
             var habat_map_<?= $guid; ?>,
@@ -300,7 +304,8 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         iconAnchor: iconAnchor
                                     })
                                 }).addTo(habat_map_<?= $guid; ?>);
-                                marker.bindPopup('<div class="habat_text_bold">' + call_sign.call_sign + '</div>' +
+                                marker.bindPopup('<div>' + moment(call_sign.date).format("LLL") + '</div>' +
+                                    '<div class="habat_text_bold">' + call_sign.call_sign + '</div>' +
                                     (packet.speed ? '<div><b><?= __('Speed', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.speed + '</div>' : '') +
                                     (packet.altitude ? '<div><b><?= __('Altitude', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.altitude + ' m</div>' : '') +
                                     (packet.comment ? '<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.comment + '</div>' : ''));
@@ -320,6 +325,8 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
             }
 
             document.addEventListener("DOMContentLoaded", function (event) {
+                moment.locale("<?=get_locale();?>");
+
                 habat_map_<?= $guid; ?> = L.map('habat_map_<?= $guid; ?>').setView(JSON.parse("<?= json_encode(array_map(function ($float) {
                     return floatval($float);
                 }, explode(",", $args['map_center']))); ?>"), <?= $args['map_zoom'] && is_numeric($args['map_zoom']) ? $args['map_zoom'] : 5; ?>);
