@@ -1,0 +1,131 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: High Altitude Balloon APRS Tracker Plugin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-26 15:25+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.2; wp-6.0.1\n"
+"X-Domain: high-altitude-balloon-aprs-plugin"
+
+#. Description of the plugin
+msgid ""
+"Add map with High Altitude Balloons to your WordPress site with shortcodes."
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:288
+msgid "Altitude"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:105
+msgid "API Key"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:128
+msgid "Attribute"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:289
+msgid "Comment"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:98
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:110
+msgid "E.g."
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:137
+msgid "Example"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:131
+msgid "Explanation"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:120
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:151
+msgid "High Altitude Balloon APRS Tracker"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:88
+msgid "High Altitude Balloon APRS Tracker Monitor"
+msgstr ""
+
+#. Name of the plugin
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:54
+msgid "High Altitude Balloon APRS Tracker Plugin"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:53
+msgid "High Altitude Balloon APRS Tracker Plugin Settings"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://diy.manko.pro"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://github.com/mkbodanu4/high-altitude-balloon-aprs-plugin"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:134
+msgid "Mandatory?"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:116
+msgid "Map"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:187
+msgid "Map center coordinates"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:145
+msgid "Map header"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:159
+msgid "Map height (px)"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:173
+msgid "Map zoom"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:217
+msgid "Missing mandatory attributes, check shortcode"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:148
+msgid "No"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:85
+msgid "Plugin Settings"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:287
+msgid "Speed"
+msgstr ""
+
+#. Author of the plugin
+msgid "UR5WKM"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:93
+msgid "URL to High Altitude Balloon APRS Tracker API"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:162
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:176
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:190
+msgid "Yes"
+msgstr ""
