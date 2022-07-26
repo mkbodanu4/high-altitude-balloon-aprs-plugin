@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: High Altitude Balloon APRS Tracker Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-26 15:25+0000\n"
+"POT-Creation-Date: 2022-07-26 19:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -21,7 +21,7 @@ msgid ""
 "Add map with High Altitude Balloons to your WordPress site with shortcodes."
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:288
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:305
 msgid "Altitude"
 msgstr ""
 
@@ -29,11 +29,11 @@ msgstr ""
 msgid "API Key"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:128
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:129
 msgid "Attribute"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:289
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:306
 msgid "Comment"
 msgstr ""
 
@@ -42,16 +42,16 @@ msgstr ""
 msgid "E.g."
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:137
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:138
 msgid "Example"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:131
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:132
 msgid "Explanation"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:120
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:151
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:121
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:152
 msgid "High Altitude Balloon APRS Tracker"
 msgstr ""
 
@@ -76,7 +76,7 @@ msgstr ""
 msgid "https://github.com/mkbodanu4/high-altitude-balloon-aprs-plugin"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:134
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:135
 msgid "Mandatory?"
 msgstr ""
 
@@ -84,27 +84,28 @@ msgstr ""
 msgid "Map"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:187
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:202
 msgid "Map center coordinates"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:145
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:146
 msgid "Map header"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:159
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:174
 msgid "Map height (px)"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:173
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:188
 msgid "Map zoom"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:217
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:233
 msgid "Missing mandatory attributes, check shortcode"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:148
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:149
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:163
 msgid "No"
 msgstr ""
 
@@ -112,8 +113,14 @@ msgstr ""
 msgid "Plugin Settings"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:287
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:304
 msgid "Speed"
+msgstr ""
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:160
+msgid ""
+"Starting from date (accept relative date like \"1 hour ago\", \"6 days ago\" "
+"etc)"
 msgstr ""
 
 #. Author of the plugin
@@ -124,8 +131,8 @@ msgstr ""
 msgid "URL to High Altitude Balloon APRS Tracker API"
 msgstr ""
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:162
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:176
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:190
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:177
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:191
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:205
 msgid "Yes"
 msgstr ""

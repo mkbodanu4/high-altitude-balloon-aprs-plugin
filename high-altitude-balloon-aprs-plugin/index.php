@@ -117,6 +117,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 <div>
                     <div class="habat_shortcode">
                         [<b>hab_tracker_map</b>
+                        since="1 day ago"
                         map_header="<i><?= __('High Altitude Balloon APRS Tracker', 'high-altitude-balloon-aprs-plugin'); ?></i>"
                         map_height="<i>480</i>"
                         map_zoom="<i>1</i>"
@@ -149,6 +150,20 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                             </td>
                             <td>
                                 <?= __('High Altitude Balloon APRS Tracker', 'high-altitude-balloon-aprs-plugin'); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i>since</i>
+                            </td>
+                            <td>
+                                <?= __('Starting from date (accept relative date like "1 hour ago", "6 days ago" etc)', 'high-altitude-balloon-aprs-plugin'); ?>
+                            </td>
+                            <td>
+                                <?= __('No', 'high-altitude-balloon-aprs-plugin'); ?>
+                            </td>
+                            <td>
+                                1 hour ago
                             </td>
                         </tr>
                         <tr>
@@ -207,6 +222,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
         $guid = substr(md5(mt_rand()), 0, 7);
 
         $args = shortcode_atts(array(
+            'since' => '',
             'map_header' => '',
             'map_height' => 480,
             'map_zoom' => 1,
@@ -238,6 +254,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
     <?php } ?>
         <div id="habat_map_<?= $guid; ?>"></div>
         <script>
+            var habat_map_since_<?= $guid; ?> = '<?= $args['since']; ?>';
             var habat_map_<?= $guid; ?>,
                 habat_map_markers_<?= $guid; ?> = [],
                 habat_map_polylines_<?= $guid; ?> = [];
@@ -299,7 +316,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                         });
                     }
                 };
-                xhttp.send("action=habat_data&get=history");
+                xhttp.send("action=habat_data&get=history" + (habat_map_since_<?= $guid; ?>.length > 0 ? "&since=" + habat_map_since_<?= $guid; ?> : ""));
             }
 
             document.addEventListener("DOMContentLoaded", function (event) {
@@ -331,9 +348,11 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
         $api_key = get_option('habat_api_key');
 
         $get = filter_var($_POST['get'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $since = filter_var($_POST['since'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $params = array(
             'key' => $api_key,
-            'get' => $get ?? NULL
+            'get' => $get ?? NULL,
+            'since' => $since ?? NULL
         );
         $request_url = $api_url . '?' . http_build_query($params);
 
