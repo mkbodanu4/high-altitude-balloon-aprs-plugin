@@ -293,7 +293,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                             });
 
                             polyline = L.polyline(polyline_coordinates, {
-                                color: '#' + Math.floor(Math.random() * 16777215).toString(16)
+                                color: '#175a95'
                             }).addTo(habat_map_<?= $guid; ?>);
                             habat_map_polylines_<?= $guid; ?>.push(polyline)
                         });
