@@ -282,7 +282,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
             <div>
                 <input type="datetime-local" id="from_<?= $guid; ?>" value="">
                 <input type="datetime-local" id="to_<?= $guid; ?>" value="">
-                <button onclick="habat_map_reload_data_<?= $guid; ?>();">
+                <button onclick="habat_map_reload_data_<?= $guid; ?>();" id="refresh_<?= $guid; ?>">
                     Refresh map
                 </button>
             </div>
@@ -298,9 +298,17 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 habat_map_markers_<?= $guid; ?> = [],
                 habat_map_polylines_<?= $guid; ?> = [],
                 habat_map_from_<?= $guid; ?> = '<?= $args['from'] ? date('Y-m-d\TH:i:s', strtotime($args['from'])) : ''; ?>',
-                habat_map_to_<?= $guid; ?> = '<?= $args['to'] ? date('Y-m-d\TH:i:s', strtotime($args['to'])) : ''; ?>';
+                habat_map_to_<?= $guid; ?> = '<?= $args['to'] ? date('Y-m-d\TH:i:s', strtotime($args['to'])) : ''; ?>',
+                habat_updating_<?= $guid; ?> = false;
 
             function habat_map_reload_data_<?= $guid; ?>() {
+                if (habat_updating_<?= $guid; ?>)
+                    return
+                habat_updating_<?= $guid; ?> = true;
+                <?php if (strtolower($args['show_filters']) === "yes") { ?>
+                document.getElementById('refresh_<?= $guid; ?>').setAttribute('disabled', 'disabled');
+                <?php } ?>
+
                 var xhttp = new XMLHttpRequest();
                 xhttp.open("POST", "<?= admin_url('admin-ajax.php');?>", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
@@ -356,6 +364,11 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                             habat_map_polylines_<?= $guid; ?>.push(polyline)
                         });
                     }
+
+                    habat_updating_<?= $guid; ?> = false;
+                    <?php if (strtolower($args['show_filters']) === "yes") { ?>
+                    document.getElementById('refresh_<?= $guid; ?>').removeAttribute('disabled');
+                    <?php } ?>
                 };
                 var xhttp_params = {
                     _ajax_nonce: "<?= wp_create_nonce('nonce-name');?>",

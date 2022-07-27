@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: High Altitude Balloon APRS Tracker Plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 15:20+0000\n"
-"PO-Revision-Date: 2022-07-26 19:45+0000\n"
+"PO-Revision-Date: 2022-07-27 09:56+0000\n"
 "Last-Translator: \n"
 "Language-Team: Українська\n"
 "Language: uk\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Додайте карту Повітряних куль до вашого сайту на Wordpress за домогою "
 "коротких кодів."
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:305
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:354
 msgid "Altitude"
 msgstr "Висота"
 
@@ -31,11 +31,11 @@ msgstr "Висота"
 msgid "API Key"
 msgstr "Ключ API"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:129
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:128
 msgid "Attribute"
 msgstr "Атрибут"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:306
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:355
 msgid "Comment"
 msgstr "Коментар"
 
@@ -44,16 +44,32 @@ msgstr "Коментар"
 msgid "E.g."
 msgstr "Наприклад"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:138
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:137
 msgid "Example"
 msgstr "Приклад"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:132
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:131
 msgid "Explanation"
 msgstr "Пояснення"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:121
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:152
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:173
+msgid ""
+"Filter data starting from this date (also accept relative date like \"1 hour "
+"ago\", \"6 days ago\" etc)"
+msgstr ""
+"Фільтрувати дані починаючи із заданої дати (також підтримуються відносні "
+"дати типу \"1 hour ago\", \"6 days ago\")"
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:187
+msgid ""
+"Filter data till this date (also accept relative date like \"1 hour ago\", "
+"\"6 days ago\" etc)"
+msgstr ""
+"Фільтрувати дані починаючи до заданої дати (також підтримуються відносні "
+"дати типу \"1 hour ago\", \"6 days ago\")"
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:120
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:151
 msgid "High Altitude Balloon APRS Tracker"
 msgstr "High Altitude Balloon APRS Tracker"
 
@@ -78,7 +94,7 @@ msgstr "https://diy.manko.pro"
 msgid "https://github.com/mkbodanu4/high-altitude-balloon-aprs-plugin"
 msgstr "https://github.com/mkbodanu4/high-altitude-balloon-aprs-plugin"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:135
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:134
 msgid "Mandatory?"
 msgstr "Обов'язковий?"
 
@@ -86,28 +102,30 @@ msgstr "Обов'язковий?"
 msgid "Map"
 msgstr "Карта"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:202
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:229
 msgid "Map center coordinates"
 msgstr "Координати центру карти"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:146
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:145
 msgid "Map header"
 msgstr "Заголовок карти"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:174
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:201
 msgid "Map height (px)"
 msgstr "Висота карти (у пікселях)"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:188
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:215
 msgid "Map zoom"
 msgstr "Зближення карти"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:233
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:262
 msgid "Missing mandatory attributes, check shortcode"
 msgstr "Пропущені обов'язкові атрибути, перевірте короткий код"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:149
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:163
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:148
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:162
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:176
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:190
 msgid "No"
 msgstr "Ні"
 
@@ -115,17 +133,13 @@ msgstr "Ні"
 msgid "Plugin Settings"
 msgstr "Налаштування плагіна"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:304
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:159
+msgid "Show filters above map, Yes or No"
+msgstr "Показувати форму з фільтрами над картою, Yes або No"
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:353
 msgid "Speed"
 msgstr "Швидкість"
-
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:160
-msgid ""
-"Starting from date (accept relative date like \"1 hour ago\", \"6 days ago\" "
-"etc)"
-msgstr ""
-"Починаючи з дати (допускається відносна дата типу \"1 hour ago\", \"6 days "
-"ago\" або подібні)"
 
 #. Author of the plugin
 msgid "UR5WKM"
@@ -135,8 +149,8 @@ msgstr "UR5WKM"
 msgid "URL to High Altitude Balloon APRS Tracker API"
 msgstr "URL до High Altitude Balloon APRS Tracker API"
 
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:177
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:191
-#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:205
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:204
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:218
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:232
 msgid "Yes"
 msgstr "Так"
