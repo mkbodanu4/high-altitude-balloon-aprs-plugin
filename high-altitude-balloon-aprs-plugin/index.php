@@ -283,7 +283,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 <input type="datetime-local" id="from_<?= $guid; ?>" value="">
                 <input type="datetime-local" id="to_<?= $guid; ?>" value="">
                 <button onclick="habat_map_reload_data_<?= $guid; ?>();" id="refresh_<?= $guid; ?>">
-                    Refresh map
+                    <?= __('Refresh map', 'high-altitude-balloon-aprs-plugin'); ?>
                 </button>
             </div>
         </div>

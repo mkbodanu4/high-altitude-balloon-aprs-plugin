@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: High Altitude Balloon APRS Tracker Plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 15:20+0000\n"
-"PO-Revision-Date: 2022-07-27 09:56+0000\n"
+"PO-Revision-Date: 2022-07-27 09:58+0000\n"
 "Last-Translator: \n"
 "Language-Team: Українська\n"
 "Language: uk\n"
@@ -132,6 +132,10 @@ msgstr "Ні"
 #: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:85
 msgid "Plugin Settings"
 msgstr "Налаштування плагіна"
+
+#: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:286
+msgid "Refresh map"
+msgstr "Оновити карту"
 
 #: ../../../../high-altitude-balloon-aprs-plugin/high-altitude-balloon-aprs-plugin/index.php:159
 msgid "Show filters above map, Yes or No"
