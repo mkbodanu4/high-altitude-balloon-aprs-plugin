@@ -375,10 +375,15 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                     action: 'habat_data',
                     get: 'history',
                 };
+                <?php if (strtolower($args['show_filters']) === "yes") { ?>
                 if (document.getElementById('from_<?= $guid; ?>').value)
                     xhttp_params.from = document.getElementById('from_<?= $guid; ?>').value;
                 if (document.getElementById('to_<?= $guid; ?>').value)
-                    xhttp_params.from = document.getElementById('to_<?= $guid; ?>').value;
+                    xhttp_params.to = document.getElementById('to_<?= $guid; ?>').value;
+                <?php } else { ?>
+                xhttp_params.from = habat_map_from_<?= $guid; ?>;
+                xhttp_params.to = habat_map_to_<?= $guid; ?>;
+                <?php } ?>
                 xhttp.send(new URLSearchParams(xhttp_params).toString());
             }
 
@@ -393,11 +398,13 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                     attribution: '© OpenStreetMap'
                 }).addTo(habat_map_<?= $guid; ?>);
 
+                <?php if (strtolower($args['show_filters']) === "yes") { ?>
                 if (habat_map_from_<?= $guid; ?>)
                     document.getElementById('from_<?= $guid; ?>').value = habat_map_from_<?= $guid; ?>;
 
                 if (habat_map_to_<?= $guid; ?>)
                     document.getElementById('to_<?= $guid; ?>').value = habat_map_to_<?= $guid; ?>;
+                <?php } ?>
 
                 habat_map_reload_data_<?= $guid; ?>();
                 setInterval(habat_map_reload_data_<?= $guid; ?>, 60000);
@@ -414,6 +421,8 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
 
     public function ajax_data()
     {
+        header("Content-type:application/json");
+
         $frontend_url = get_option('habat_frontend_url');
         $api_url = trim($frontend_url, '/') . '/api.php';
         $api_key = get_option('habat_api_key');
@@ -429,8 +438,12 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
         );
         $request_url = $api_url . '?' . http_build_query($params);
 
-        if (!$frontend_url || !$api_key)
+        if (!$frontend_url || !$api_key) {
+            echo json_encode(array(
+                "error" => "Invalid request"
+            ));
             wp_die();
+        }
 
         $handler = curl_init();
         curl_setopt($handler, CURLOPT_URL, $request_url);
@@ -443,10 +456,30 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
         curl_setopt($handler, CURLOPT_TIMEOUT, 30);
         curl_setopt($handler, CURLOPT_USERAGENT, "WordPress at " . get_home_url());
         $result = curl_exec($handler);
+        $http_code = curl_getinfo($handler, CURLINFO_HTTP_CODE);
         curl_close($handler);
 
-        header("Content-type:application/json");
-        echo $result;
+        if (!$result) {
+            http_response_code($http_code);
+            echo json_encode(array(
+                "code" => $http_code,
+                "error" => "No response from remote API"
+            ));
+            wp_die();
+        }
+
+        $json = json_decode($result);
+
+        if (!$json) {
+            http_response_code(500);
+            echo json_encode(array(
+                "code" => $http_code,
+                "error" => "Invalid remote API response"
+            ));
+            wp_die();
+        }
+
+        echo json_encode($json);
 
         wp_die();
     }
