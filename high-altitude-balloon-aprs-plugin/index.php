@@ -348,8 +348,10 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         iconAnchor: iconAnchor
                                     })
                                 }).addTo(habat_map_<?= $guid; ?>);
-                                marker.bindPopup('<div>' + moment(call_sign.date).format("LLL") + '</div>' +
+                                var packet_date = +new Date(packet.date.replace(" ", "T") + "Z");
+                                marker.bindPopup('<div>' + moment(packet_date).fromNow() + '</div>' +
                                     '<div class="habat_text_bold">' + call_sign.call_sign + '</div>' +
+                                    '<div>' + moment(packet_date).format("LLL") + '</div>' +
                                     (packet.speed ? '<div><b><?= __('Speed', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.speed + '</div>' : '') +
                                     (packet.altitude ? '<div><b><?= __('Altitude', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.altitude + ' m</div>' : '') +
                                     (packet.comment ? '<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.comment + '</div>' : ''));
