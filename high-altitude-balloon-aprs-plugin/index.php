@@ -274,7 +274,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
 
             #habat_map_overlay_<?= $guid; ?> {
                 position: relative;
-                top: <?= '-'.intval($args['map_height']).'px'; ?>;
+                margin-top: <?= '-'.intval($args['map_height']).'px'; ?>;
                 height: <?= intval($args['map_height']).'px'; ?>;
                 background-color: #fff;
                 z-index: 999999;
@@ -314,6 +314,13 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 habat_map_to_<?= $guid; ?> = '<?= $args['to'] ? date('Y-m-d\TH:i:s', strtotime($args['to'])) : ''; ?>',
                 habat_updating_<?= $guid; ?> = false;
 
+            function prevent_scroll_<?= $guid; ?>(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                return false;
+            }
+
             function habat_map_reload_data_<?= $guid; ?>() {
                 if (habat_updating_<?= $guid; ?>)
                     return
@@ -324,6 +331,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 document.getElementById('refresh_<?= $guid; ?>').setAttribute('disabled', 'disabled');
                 <?php } ?>
                 document.getElementById('habat_map_overlay_<?= $guid; ?>').style.display = 'block';
+                document.getElementById('habat_map_overlay_<?= $guid; ?>').addEventListener('wheel', prevent_scroll_<?= $guid; ?>);
 
                 var xhttp = new XMLHttpRequest();
                 xhttp.open("POST", "<?= admin_url('admin-ajax.php');?>", true);
@@ -350,6 +358,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
 
                                 history.forEach(function (packet, idx) {
                                     var latlng = new L.LatLng(packet.lat, packet.lng);
+                                    polyline_coordinates.push(latlng);
 
                                     if (idx === history.length - 1) {
                                         img = '<?= plugin_dir_url(__FILE__); ?>images/balloon.svg';
@@ -376,8 +385,6 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         (packet.a !== undefined && packet.a ? '<div><b><?= __('Altitude', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.a + ' m</div>' : '') +
                                         (packet.c !== undefined && packet.c ? '<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.c + '</div>' : ''));
                                     habat_map_markers_<?= $guid; ?>.push(marker);
-
-                                    polyline_coordinates.push(latlng);
                                 });
 
                                 if (polyline_coordinates.length > 0) {
@@ -395,6 +402,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                     document.getElementById('refresh_<?= $guid; ?>').removeAttribute('disabled');
                     <?php } ?>
                     document.getElementById('habat_map_overlay_<?= $guid; ?>').style.display = 'none';
+                    document.getElementById('habat_map_overlay_<?= $guid; ?>').removeEventListener('wheel', prevent_scroll_<?= $guid; ?>);
                 };
                 var xhttp_params = {
                     _ajax_nonce: "<?= wp_create_nonce('nonce-name');?>",
