@@ -272,6 +272,16 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 height: <?= intval($args['map_height']).'px'; ?>;
             }
 
+            #habat_map_overlay_<?= $guid; ?> {
+                position: relative;
+                top: <?= '-'.intval($args['map_height']).'px'; ?>;
+                height: <?= intval($args['map_height']).'px'; ?>;
+                background-color: #fff;
+                z-index: 999999;
+                opacity: 0.4;
+                display: none;
+            }
+
             .habat_text_bold {
                 font-weight: bold;
             }
@@ -288,7 +298,10 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
             </div>
         </div>
     <?php } ?>
-        <div id="habat_map_<?= $guid; ?>"></div>
+        <div id="habat_map_box_<?= $guid; ?>">
+            <div id="habat_map_<?= $guid; ?>"></div>
+            <div id="habat_map_overlay_<?= $guid; ?>"></div>
+        </div>
 
         <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment-with-locales.min.js"
                 integrity="sha256-QwcluVRoJ33LzMJ+COPYcydsAIJzcxCwsa0zA5JRGEc=" crossorigin="anonymous"></script>
@@ -299,69 +312,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 habat_map_polylines_<?= $guid; ?> = [],
                 habat_map_from_<?= $guid; ?> = '<?= $args['from'] ? date('Y-m-d\TH:i:s', strtotime($args['from'])) : ''; ?>',
                 habat_map_to_<?= $guid; ?> = '<?= $args['to'] ? date('Y-m-d\TH:i:s', strtotime($args['to'])) : ''; ?>',
-                habat_updating_<?= $guid; ?> = false,
-                habat_map_data_<?= $guid; ?> = [];
-
-
-            function habat_map_build_layers_<?= $guid; ?>() {
-                if (!habat_map_data_<?= $guid; ?> || habat_map_data_<?= $guid; ?>.length === 0)
-                    return;
-
-                var marker, polyline;
-
-                habat_map_markers_<?= $guid; ?>.forEach(function (marker) {
-                    habat_map_<?= $guid; ?>.removeLayer(marker);
-                });
-                habat_map_markers_<?= $guid; ?> = [];
-
-                habat_map_polylines_<?= $guid; ?>.forEach(function (polyline) {
-                    habat_map_<?= $guid; ?>.removeLayer(polyline);
-                });
-                habat_map_polylines_<?= $guid; ?> = [];
-
-                for (const [call_sign, history] of Object.entries(habat_map_data_<?= $guid; ?>)) {
-                    var polyline_coordinates = [], img, iconSize, iconAnchor;
-
-                    history.forEach(function (packet, idx) {
-                        var latlng = new L.LatLng(packet.lat, packet.lng);
-
-                        if (idx === history.length - 1) {
-                            img = '<?= plugin_dir_url(__FILE__); ?>images/balloon.svg';
-                            iconSize = [24, 24];
-                            iconAnchor = [12, 24]
-                        } else {
-                            img = '<?= plugin_dir_url(__FILE__); ?>images/dot.svg';
-                            iconSize = [16, 16];
-                            iconAnchor = [8, 8];
-                        }
-                        marker = L.marker(latlng, {
-                            title: call_sign,
-                            icon: L.icon({
-                                iconUrl: img,
-                                iconSize: iconSize,
-                                iconAnchor: iconAnchor
-                            })
-                        }).addTo(habat_map_<?= $guid; ?>);
-                        var packet_date = +new Date(packet.d.replace(" ", "T") + "Z");
-                        marker.bindPopup('<div>' + moment(packet_date).fromNow() + '</div>' +
-                            '<div class="habat_text_bold">' + call_sign + '</div>' +
-                            '<div>' + moment(packet_date).format("LLL") + '</div>' +
-                            (packet.s !== undefined && packet.s ? '<div><b><?= __('Speed', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.s + '</div>' : '') +
-                            (packet.a !== undefined && packet.a ? '<div><b><?= __('Altitude', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.a + ' m</div>' : '') +
-                            (packet.c !== undefined && packet.c ? '<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.c + '</div>' : ''));
-                        habat_map_markers_<?= $guid; ?>.push(marker);
-
-                        polyline_coordinates.push(latlng);
-                    });
-
-                    if (polyline_coordinates.length > 0) {
-                        polyline = L.polyline(polyline_coordinates, {
-                            color: '#175a95'
-                        }).addTo(habat_map_<?= $guid; ?>);
-                        habat_map_polylines_<?= $guid; ?>.push(polyline);
-                    }
-                }
-            }
+                habat_updating_<?= $guid; ?> = false;
 
             function habat_map_reload_data_<?= $guid; ?>() {
                 if (habat_updating_<?= $guid; ?>)
@@ -372,6 +323,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 <?php if (strtolower($args['show_filters']) === "yes") { ?>
                 document.getElementById('refresh_<?= $guid; ?>').setAttribute('disabled', 'disabled');
                 <?php } ?>
+                document.getElementById('habat_map_overlay_<?= $guid; ?>').style.display = 'block';
 
                 var xhttp = new XMLHttpRequest();
                 xhttp.open("POST", "<?= admin_url('admin-ajax.php');?>", true);
@@ -381,8 +333,60 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                         var json = JSON.parse(this.response);
 
                         if (json.data !== undefined) {
-                            habat_map_data_<?= $guid; ?> = json.data;
-                            habat_map_build_layers_<?= $guid; ?>();
+                            var marker, polyline;
+
+                            habat_map_markers_<?= $guid; ?>.forEach(function (marker) {
+                                habat_map_<?= $guid; ?>.removeLayer(marker);
+                            });
+                            habat_map_markers_<?= $guid; ?> = [];
+
+                            habat_map_polylines_<?= $guid; ?>.forEach(function (polyline) {
+                                habat_map_<?= $guid; ?>.removeLayer(polyline);
+                            });
+                            habat_map_polylines_<?= $guid; ?> = [];
+
+                            for (const [call_sign, history] of Object.entries(json.data)) {
+                                var polyline_coordinates = [], img, iconSize, iconAnchor;
+
+                                history.forEach(function (packet, idx) {
+                                    var latlng = new L.LatLng(packet.lat, packet.lng);
+
+                                    if (idx === history.length - 1) {
+                                        img = '<?= plugin_dir_url(__FILE__); ?>images/balloon.svg';
+                                        iconSize = [24, 24];
+                                        iconAnchor = [12, 24]
+                                    } else {
+                                        img = '<?= plugin_dir_url(__FILE__); ?>images/dot.svg';
+                                        iconSize = [16, 16];
+                                        iconAnchor = [8, 8];
+                                    }
+                                    marker = L.marker(latlng, {
+                                        title: call_sign,
+                                        icon: L.icon({
+                                            iconUrl: img,
+                                            iconSize: iconSize,
+                                            iconAnchor: iconAnchor
+                                        })
+                                    }).addTo(habat_map_<?= $guid; ?>);
+                                    var packet_date = +new Date(packet.d.replace(" ", "T") + "Z");
+                                    marker.bindPopup('<div>' + moment(packet_date).fromNow() + '</div>' +
+                                        '<div class="habat_text_bold">' + call_sign + '</div>' +
+                                        '<div>' + moment(packet_date).format("LLL") + '</div>' +
+                                        (packet.s !== undefined && packet.s ? '<div><b><?= __('Speed', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.s + '</div>' : '') +
+                                        (packet.a !== undefined && packet.a ? '<div><b><?= __('Altitude', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.a + ' m</div>' : '') +
+                                        (packet.c !== undefined && packet.c ? '<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.c + '</div>' : ''));
+                                    habat_map_markers_<?= $guid; ?>.push(marker);
+
+                                    polyline_coordinates.push(latlng);
+                                });
+
+                                if (polyline_coordinates.length > 0) {
+                                    polyline = L.polyline(polyline_coordinates, {
+                                        color: '#175a95'
+                                    }).addTo(habat_map_<?= $guid; ?>);
+                                    habat_map_polylines_<?= $guid; ?>.push(polyline);
+                                }
+                            }
                         }
                     }
 
@@ -390,6 +394,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                     <?php if (strtolower($args['show_filters']) === "yes") { ?>
                     document.getElementById('refresh_<?= $guid; ?>').removeAttribute('disabled');
                     <?php } ?>
+                    document.getElementById('habat_map_overlay_<?= $guid; ?>').style.display = 'none';
                 };
                 var xhttp_params = {
                     _ajax_nonce: "<?= wp_create_nonce('nonce-name');?>",
