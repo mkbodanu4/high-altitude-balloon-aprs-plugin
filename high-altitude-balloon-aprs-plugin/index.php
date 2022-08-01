@@ -377,7 +377,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                             iconAnchor: iconAnchor
                                         })
                                     }).addTo(habat_map_<?= $guid; ?>);
-                                    var packet_date = +new Date(packet.d.replace(" ", "T") + "Z");
+                                    var packet_date = +new Date(packet.t * 1000);
                                     marker.bindPopup('<div>' + moment(packet_date).fromNow() + '</div>' +
                                         '<div class="habat_text_bold">' + call_sign + '</div>' +
                                         '<div>' + moment(packet_date).format("LLL") + '</div>' +
@@ -488,12 +488,12 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
             'get' => $get,
         );
 
-        if($from) $params['from'] = $from;
-        if($to) $params['to'] = $to;
-        if($south_west_lat) $params['south_west_lat'] = $south_west_lat;
-        if($south_west_lng) $params['south_west_lng'] = $south_west_lng;
-        if($north_east_lat) $params['north_east_lat'] = $north_east_lat;
-        if($north_east_lng) $params['north_east_lng'] = $north_east_lng;
+        if ($from) $params['from'] = $from;
+        if ($to) $params['to'] = $to;
+        if ($south_west_lat) $params['south_west_lat'] = $south_west_lat;
+        if ($south_west_lng) $params['south_west_lng'] = $south_west_lng;
+        if ($north_east_lat) $params['north_east_lat'] = $north_east_lat;
+        if ($north_east_lng) $params['north_east_lng'] = $north_east_lng;
 
         $request_url = $api_url . '?' . http_build_query($params);
 
