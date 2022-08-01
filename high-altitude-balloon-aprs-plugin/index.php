@@ -409,10 +409,13 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                     action: 'habat_data',
                     get: 'history',
                 };
+                /*
+                // Load only part of data from shown part of map. Works slower than loading less points
                 xhttp_params.south_west_lat = habat_map_<?= $guid; ?>.getBounds().getSouthWest().lat;
                 xhttp_params.south_west_lng = habat_map_<?= $guid; ?>.getBounds().getSouthWest().lng;
                 xhttp_params.north_east_lat = habat_map_<?= $guid; ?>.getBounds().getNorthEast().lat;
                 xhttp_params.north_east_lng = habat_map_<?= $guid; ?>.getBounds().getNorthEast().lng;
+                */
                 <?php if (strtolower($args['show_filters']) === "yes") { ?>
                 if (document.getElementById('from_<?= $guid; ?>').value)
                     xhttp_params.from = document.getElementById('from_<?= $guid; ?>').value;
@@ -436,9 +439,12 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                     attribution: '© OpenStreetMap'
                 }).addTo(habat_map_<?= $guid; ?>);
 
+                /*
+                // Load only part of data from shown part of map. Works slower than loading less points
                 habat_map_<?= $guid; ?>.on('moveend', function (e) {
                     habat_map_reload_data_<?= $guid; ?>();
                 });
+                */
 
                 <?php if (strtolower($args['show_filters']) === "yes") { ?>
                 if (habat_map_from_<?= $guid; ?>)
@@ -472,7 +478,6 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
         $get = filter_var($_POST['get'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $from = filter_var($_POST['from'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $to = filter_var($_POST['to'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
         $south_west_lat = filter_var($_POST['south_west_lat'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $south_west_lng = filter_var($_POST['south_west_lng'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $north_east_lat = filter_var($_POST['north_east_lat'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -480,14 +485,16 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
 
         $params = array(
             'key' => $api_key,
-            'get' => $get ?? NULL,
-            'from' => $from ?? NULL,
-            'to' => $to ?? NULL,
-            'south_west_lat' => $south_west_lat ?? NULL,
-            'south_west_lng' => $south_west_lng ?? NULL,
-            'north_east_lat' => $north_east_lat ?? NULL,
-            'north_east_lng' => $north_east_lng ?? NULL
+            'get' => $get,
         );
+
+        if($from) $params['from'] = $from;
+        if($to) $params['to'] = $to;
+        if($south_west_lat) $params['south_west_lat'] = $south_west_lat;
+        if($south_west_lng) $params['south_west_lng'] = $south_west_lng;
+        if($north_east_lat) $params['north_east_lat'] = $north_east_lat;
+        if($north_east_lng) $params['north_east_lng'] = $north_east_lng;
+
         $request_url = $api_url . '?' . http_build_query($params);
 
         if (!$frontend_url || !$api_key) {
