@@ -443,6 +443,9 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         img = '<?= plugin_dir_url(__FILE__); ?>images/balloon.svg';
                                         iconSize = [24, 24];
                                         iconAnchor = [12, 24]
+
+                                        if (document.getElementById('call_sign_<?= $guid; ?>').value)
+                                            habat_map_<?= $guid; ?>.setView(latlng, 9);
                                     } else {
                                         img = '<?= plugin_dir_url(__FILE__); ?>images/dot.svg';
                                         iconSize = [16, 16];
