@@ -538,6 +538,12 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 });
                 */
                 <?php if (strtolower($args['show_filters']) === "yes") { ?>
+                var hash = location.hash.substring(1),
+                    hash_call_sign = hash.substring(hash.search(/(?<=^|&)call_sign=/)).split('&')[0].split('=')[1];
+
+                if (hash_call_sign)
+                    document.getElementById('call_sign_<?= $guid; ?>').value = hash_call_sign;
+
                 flatpickr('#from_<?= $guid; ?>', {
                     enableTime: true,
                     dateFormat: "Y-m-d H:i",
