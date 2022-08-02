@@ -118,6 +118,9 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                     <div class="habat_shortcode">
                         [<b>hab_tracker_map</b>
                         map_header="<i><?= __('High Altitude Balloon APRS Tracker', 'high-altitude-balloon-aprs-plugin'); ?></i>"
+                        show_filters="<i>Yes</i>"
+                        only_last_point="<i>No</i>"
+                        from="<i>1 hour ago</i>"
                         map_height="<i>480</i>"
                         map_zoom="<i>1</i>"
                         map_center="<i>49.0139,31.2858</i>"]
@@ -163,6 +166,20 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                             </td>
                             <td>
                                 Yes
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i>only_last_point</i>
+                            </td>
+                            <td>
+                                <?= __('Show only last point on map, Yes or No', 'high-altitude-balloon-aprs-plugin'); ?>
+                            </td>
+                            <td>
+                                <?= __('No', 'high-altitude-balloon-aprs-plugin'); ?>
+                            </td>
+                            <td>
+                                No
                             </td>
                         </tr>
                         <tr>
@@ -251,6 +268,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
         $args = shortcode_atts(array(
             'map_header' => '',
             'show_filters' => 'Yes',
+            'only_last_point' => 'No',
             'from' => '',
             'to' => '',
             'map_height' => 480,
@@ -444,8 +462,10 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         iconSize = [24, 24];
                                         iconAnchor = [12, 24]
 
+                                        <?php if (strtolower($args['show_filters']) === "yes") { ?>
                                         if (document.getElementById('call_sign_<?= $guid; ?>').value)
                                             habat_map_<?= $guid; ?>.setView(latlng, 9);
+                                        <?php } ?>
                                     } else {
                                         img = '<?= plugin_dir_url(__FILE__); ?>images/dot.svg';
                                         iconSize = [16, 16];
@@ -508,6 +528,9 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 <?php } else { ?>
                 xhttp_params.from = habat_map_from_<?= $guid; ?>;
                 xhttp_params.to = habat_map_to_<?= $guid; ?>;
+                <?php } ?>
+                <?php if (strtolower($args['only_last_point']) === "yes") { ?>
+                xhttp_params.only_last_point = true;
                 <?php } ?>
                 xhttp.send(new URLSearchParams(xhttp_params).toString());
             }
@@ -589,6 +612,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
         $call_sign = filter_var($_POST['call_sign'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $from = filter_var($_POST['from'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $to = filter_var($_POST['to'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $only_last_point = filter_var($_POST['only_last_point'], FILTER_SANITIZE_NUMBER_INT);
         $south_west_lat = filter_var($_POST['south_west_lat'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $south_west_lng = filter_var($_POST['south_west_lng'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $north_east_lat = filter_var($_POST['north_east_lat'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -602,6 +626,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
         if ($call_sign) $params['call_sign'] = $call_sign;
         if ($from) $params['from'] = $from;
         if ($to) $params['to'] = $to;
+        if ($only_last_point) $params['only_last_point'] = TRUE;
         if ($south_west_lat) $params['south_west_lat'] = $south_west_lat;
         if ($south_west_lng) $params['south_west_lng'] = $south_west_lng;
         if ($north_east_lat) $params['north_east_lat'] = $north_east_lat;
