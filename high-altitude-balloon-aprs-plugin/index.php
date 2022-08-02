@@ -489,7 +489,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                     habat_map_markers_<?= $guid; ?>.push(marker);
                                 });
 
-                                if (polyline_coordinates.length > 0) {
+                                if (polyline_coordinates.length > 1) {
                                     polyline = L.polyline(polyline_coordinates, {
                                         color: '#175a95'
                                     }).addTo(habat_map_<?= $guid; ?>);
