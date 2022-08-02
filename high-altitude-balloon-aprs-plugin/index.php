@@ -612,7 +612,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
         $call_sign = filter_var($_POST['call_sign'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $from = filter_var($_POST['from'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $to = filter_var($_POST['to'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $only_last_point = filter_var($_POST['only_last_point'], FILTER_SANITIZE_NUMBER_INT);
+        $only_last_point = filter_var($_POST['only_last_point'], FILTER_VALIDATE_BOOLEAN);
         $south_west_lat = filter_var($_POST['south_west_lat'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $south_west_lng = filter_var($_POST['south_west_lng'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $north_east_lat = filter_var($_POST['north_east_lat'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -626,7 +626,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
         if ($call_sign) $params['call_sign'] = $call_sign;
         if ($from) $params['from'] = $from;
         if ($to) $params['to'] = $to;
-        if ($only_last_point) $params['only_last_point'] = TRUE;
+        if ($only_last_point) $params['only_last_point'] = $only_last_point;
         if ($south_west_lat) $params['south_west_lat'] = $south_west_lat;
         if ($south_west_lng) $params['south_west_lng'] = $south_west_lng;
         if ($north_east_lat) $params['north_east_lat'] = $north_east_lat;
