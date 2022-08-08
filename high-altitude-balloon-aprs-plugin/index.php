@@ -546,8 +546,8 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
 
             <?php if (strtolower($args['show_filters']) === "yes") { ?>
             function habat_map_reset_<?= $guid; ?>() {
-                habat_map_from_<?= $guid; ?> = '<?= $args['from'] ? date('Y-m-d H:i', strtotime($args['from'])) : ''; ?>';
-                habat_map_to_<?= $guid; ?> = '<?= $args['to'] ? date('Y-m-d H:i', strtotime($args['to'])) : ''; ?>';
+                habat_map_from_<?= $guid; ?> = '<?= $args['from'] ? date('Y-m-d H:i:00', strtotime($args['from'])) : ''; ?>';
+                habat_map_to_<?= $guid; ?> = '<?= $args['to'] ? date('Y-m-d H:i:00', strtotime($args['to'])) : ''; ?>';
 
                 document.getElementById('call_sign_<?= $guid; ?>').value = '';
                 document.getElementById('track_call_sign_<?= $guid; ?>').checked = false;
