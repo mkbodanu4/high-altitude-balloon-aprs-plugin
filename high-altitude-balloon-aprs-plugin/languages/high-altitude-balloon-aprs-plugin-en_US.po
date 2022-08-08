@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: High Altitude Balloon APRS Tracker Plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 15:20+0000\n"
-"PO-Revision-Date: 2022-08-01 17:37+0000\n"
+"PO-Revision-Date: 2022-08-08 12:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Add map with High Altitude Balloons to your WordPress site with shortcodes."
 
-#: index.php:464
+#: index.php:492
 msgid "Altitude"
 msgstr "Altitude"
 
@@ -29,15 +29,15 @@ msgstr "Altitude"
 msgid "API Key"
 msgstr "API Key"
 
-#: index.php:128
+#: index.php:131
 msgid "Attribute"
 msgstr "Attribute"
 
-#: index.php:362
+#: index.php:380 index.php:383
 msgid "Call Sign"
 msgstr "Call Sign"
 
-#: index.php:465
+#: index.php:493
 msgid "Comment"
 msgstr "Comment"
 
@@ -45,15 +45,15 @@ msgstr "Comment"
 msgid "E.g."
 msgstr "E.g."
 
-#: index.php:137
+#: index.php:140
 msgid "Example"
 msgstr "Example"
 
-#: index.php:131
+#: index.php:134
 msgid "Explanation"
 msgstr "Explanation"
 
-#: index.php:173
+#: index.php:190
 msgid ""
 "Filter data starting from this date (also accept relative date like \"1 hour "
 "ago\", \"6 days ago\" etc)"
@@ -61,7 +61,7 @@ msgstr ""
 "Filter data starting from this date (also accept relative date like \"1 hour "
 "ago\", \"6 days ago\" etc)"
 
-#: index.php:187
+#: index.php:204
 msgid ""
 "Filter data till this date (also accept relative date like \"1 hour ago\", "
 "\"6 days ago\" etc)"
@@ -69,11 +69,11 @@ msgstr ""
 "Filter data till this date (also accept relative date like \"1 hour ago\", "
 "\"6 days ago\" etc)"
 
-#: index.php:364
+#: index.php:387
 msgid "From date"
 msgstr "From date"
 
-#: index.php:120 index.php:151
+#: index.php:120 index.php:154
 msgid "High Altitude Balloon APRS Tracker"
 msgstr "High Altitude Balloon APRS Tracker"
 
@@ -98,7 +98,7 @@ msgstr "https://diy.manko.pro"
 msgid "https://github.com/mkbodanu4/high-altitude-balloon-aprs-plugin"
 msgstr "https://github.com/mkbodanu4/high-altitude-balloon-aprs-plugin"
 
-#: index.php:134
+#: index.php:137
 msgid "Mandatory?"
 msgstr "Mandatory?"
 
@@ -106,27 +106,27 @@ msgstr "Mandatory?"
 msgid "Map"
 msgstr "Map"
 
-#: index.php:229
+#: index.php:246
 msgid "Map center coordinates"
 msgstr "Map center coordinates"
 
-#: index.php:145
+#: index.php:148
 msgid "Map header"
 msgstr "Map header"
 
-#: index.php:201
+#: index.php:218
 msgid "Map height (px)"
 msgstr "Map height (px)"
 
-#: index.php:215
+#: index.php:232
 msgid "Map zoom"
 msgstr "Map zoom"
 
-#: index.php:262
+#: index.php:280
 msgid "Missing mandatory attributes, check shortcode"
 msgstr "v"
 
-#: index.php:148 index.php:162 index.php:176 index.php:190
+#: index.php:151 index.php:165 index.php:179 index.php:193 index.php:207
 msgid "No"
 msgstr "No"
 
@@ -134,25 +134,33 @@ msgstr "No"
 msgid "Plugin Settings"
 msgstr "Plugin Settings"
 
-#: index.php:372
+#: index.php:395
 msgid "Refresh map"
 msgstr "Refresh map"
 
-#: index.php:368
+#: index.php:391
 msgid "Reset filters"
 msgstr "From date"
 
-#: index.php:159
+#: index.php:162
 msgid "Show filters above map, Yes or No"
 msgstr "Show filters above map, Yes or No"
 
-#: index.php:463
+#: index.php:176
+msgid "Show only last point on map, Yes or No"
+msgstr "Show only last point on map, Yes or No"
+
+#: index.php:491
 msgid "Speed"
 msgstr "Speed"
 
-#: index.php:366
+#: index.php:389
 msgid "To date"
 msgstr "To date"
+
+#: index.php:384
+msgid "Track"
+msgstr "Track"
 
 #. Author of the plugin
 msgid "UR5WKM"
@@ -162,6 +170,6 @@ msgstr "UR5WKM"
 msgid "URL to High Altitude Balloon APRS Tracker API"
 msgstr "URL to High Altitude Balloon APRS Tracker API"
 
-#: index.php:204 index.php:218 index.php:232
+#: index.php:221 index.php:235 index.php:249
 msgid "Yes"
 msgstr "Yes"

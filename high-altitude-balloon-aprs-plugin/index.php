@@ -378,6 +378,11 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 <div>
                     <input type="text" id="call_sign_<?= $guid; ?>"
                            placeholder="<?= __('Call Sign', 'high-altitude-balloon-aprs-plugin'); ?>" value="">
+                    <label id="track_call_sign_box_<?= $guid; ?>" style="display: none">
+                        <input type="checkbox" id="track_call_sign_<?= $guid; ?>"
+                               title="<?= __('Call Sign', 'high-altitude-balloon-aprs-plugin'); ?>" value="1">
+                        <?= __('Track', 'high-altitude-balloon-aprs-plugin'); ?>
+                    </label>
                     <input type="text" id="from_<?= $guid; ?>"
                            placeholder="<?= __('From date', 'high-altitude-balloon-aprs-plugin'); ?>" value="">
                     <input type="text" id="to_<?= $guid; ?>"
@@ -463,7 +468,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         iconAnchor = [12, 24]
 
                                         <?php if (strtolower($args['show_filters']) === "yes") { ?>
-                                        if (document.getElementById('call_sign_<?= $guid; ?>').value)
+                                        if (document.getElementById('call_sign_<?= $guid; ?>').value && document.getElementById('track_call_sign_<?= $guid; ?>').checked)
                                             habat_map_<?= $guid; ?>.setView(latlng, 9);
                                         <?php } ?>
                                     } else {
@@ -541,10 +546,42 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 habat_map_to_<?= $guid; ?> = '<?= $args['to'] ? date('Y-m-d H:i', strtotime($args['to'])) : ''; ?>';
 
                 document.getElementById('call_sign_<?= $guid; ?>').value = '';
+                document.getElementById('track_call_sign_<?= $guid; ?>').checked = false;
+                document.getElementById('track_call_sign_box_<?= $guid; ?>').style.display = 'none';
+                window.location.hash = '';
                 document.getElementById('from_<?= $guid; ?>').value = habat_map_from_<?= $guid; ?> && habat_map_from_<?= $guid; ?>.length > 0 ? habat_map_from_<?= $guid; ?> : '';
                 document.getElementById('to_<?= $guid; ?>').value = habat_map_to_<?= $guid; ?> && habat_map_to_<?= $guid; ?>.length > 0 ? habat_map_to_<?= $guid; ?> : '';
             }
             <?php } ?>
+
+            function get_hash_parts_<?= $guid; ?>() {
+                var hash = location.hash.substring(1),
+                    dict = {};
+
+                if(hash.length > 0) {
+                    hash.split('&').map(function (item){
+                        var pair = item.split('=');
+                        if(pair.length === 2) {
+                            dict[pair[0]] = pair[1];
+                        }
+                    });
+                }
+
+                return dict;
+            }
+
+            function get_hash_<?= $guid; ?>(dict) {
+                var hash = '#', parts = [],
+                keys = Object.keys(dict);
+
+                if(keys.length > 0) {
+                    keys.forEach(function (key){
+                       parts.push([key, dict[key]].join('='))
+                    });
+                }
+
+                return hash + parts.join('&');
+            }
 
             document.addEventListener("DOMContentLoaded", function (event) {
                 moment.locale("<?=get_locale();?>");
@@ -552,6 +589,16 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 habat_map_<?= $guid; ?> = L.map('habat_map_<?= $guid; ?>').setView(JSON.parse("<?= json_encode(array_map(function ($float) {
                     return floatval($float);
                 }, explode(",", $args['map_center']))); ?>"), <?= $args['map_zoom'] && is_numeric($args['map_zoom']) ? $args['map_zoom'] : 5; ?>);
+
+                var southWest = new L.latLng(-90, -180),
+                    northEast = new L.latLng(90, 180);
+                var bounds = new L.latLngBounds(southWest, northEast);
+
+                habat_map_<?= $guid; ?>.setMaxBounds(bounds);
+                habat_map_<?= $guid; ?>.setMinZoom(1);
+                habat_map_<?= $guid; ?>.on('drag', function () {
+                    habat_map_<?= $guid; ?>.panInsideBounds(bounds, {animate: false});
+                });
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap'
@@ -564,11 +611,18 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 });
                 */
                 <?php if (strtolower($args['show_filters']) === "yes") { ?>
-                var hash = location.hash.substring(1),
-                    hash_call_sign = hash.substring(hash.search(/(?<=^|&)call_sign=/)).split('&')[0].split('=')[1];
+                var hash_dict = get_hash_parts_<?= $guid; ?>();
 
-                if (hash_call_sign)
-                    document.getElementById('call_sign_<?= $guid; ?>').value = hash_call_sign;
+                if (hash_dict['call_sign'] !== undefined) {
+                    document.getElementById('call_sign_<?= $guid; ?>').value = hash_dict['call_sign'];
+                    document.getElementById('track_call_sign_box_<?= $guid; ?>').style.display = 'inline-block';
+                    if(hash_dict['track'] !== undefined) {
+                        document.getElementById('track_call_sign_<?= $guid; ?>').checked = (hash_dict['track'] === '1');
+                    }
+                } else {
+                    document.getElementById('track_call_sign_box_<?= $guid; ?>').style.display = 'none';
+                    document.getElementById('track_call_sign_<?= $guid; ?>').checked = false;
+                }
 
                 flatpickr('#from_<?= $guid; ?>', {
                     enableTime: true,
@@ -583,6 +637,33 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                     time_24hr: true,
                     defaultDate: habat_map_to_<?= $guid; ?> && habat_map_to_<?= $guid; ?>.length > 0 ? habat_map_to_<?= $guid; ?> : null
                 });
+
+                document.getElementById('call_sign_<?= $guid; ?>').onkeyup = function (e) {
+                    var hash_dict = get_hash_parts_<?= $guid; ?>();
+                    var call_sign = document.getElementById('call_sign_<?= $guid; ?>').value.trim();
+                    if (call_sign.length > 0) {
+                        document.getElementById('track_call_sign_box_<?= $guid; ?>').style.display = 'inline-block';
+                        hash_dict['call_sign'] = call_sign
+                    } else {
+                        document.getElementById('track_call_sign_box_<?= $guid; ?>').style.display = 'none';
+                        if(hash_dict['call_sign'] !== undefined) {
+                            delete hash_dict['call_sign'];
+                        }
+                    }
+                    window.location.hash = get_hash_<?= $guid; ?>(hash_dict);
+                };
+                document.getElementById('track_call_sign_<?= $guid; ?>').onchange = function (e) {
+                    var hash_dict = get_hash_parts_<?= $guid; ?>();
+                    var track = document.getElementById('track_call_sign_<?= $guid; ?>').checked;
+                    if(track) {
+                        hash_dict['track'] = '1';
+                    } else {
+                        if(hash_dict['track'] !== undefined) {
+                            delete hash_dict['track'];
+                        }
+                    }
+                    window.location.hash = get_hash_<?= $guid; ?>(hash_dict);
+                };
                 <?php } ?>
 
                 habat_map_reload_data_<?= $guid; ?>();
