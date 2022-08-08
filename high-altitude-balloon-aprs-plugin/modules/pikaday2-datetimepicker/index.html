@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>pikaday2-datetimepicker</title>
+</head>
+<body>
+    <h1>pikaday2-datetimepicker</h1>
+
+    <p class="large">A refreshing JavaScript DatetimePicker — lightweight, no dependencies, modular CSS.</p>
+
+    <p><a href="https://github.com/huangyifu/pikaday2-datetimepicker"><strong>Pikaday source on GitHub</strong></a></p>
+
+    <label for="datepicker">Date:</label>
+    <br>
+    <input type="text" id="datepicker">
+
+    <h2>What is this?</h2>
+
+
+    <script src="pikaday.js"></script>
+    <script>
+    var picker = new Pikaday(
+    {
+        field: document.getElementById('datepicker'),
+        firstDay: 1,
+        minDate: new Date(),
+        maxDate: new Date(2020, 12, 31),
+        yearRange: [2000,2020]
+    });
+    </script>
+</body>
+</html>

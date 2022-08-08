@@ -282,13 +282,9 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
 
         ob_start();
         ?>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-              integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-              crossorigin=""/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css"
-              integrity="sha256-GzSkJVLJbxDk36qko2cnawOGiqz/Y8GsQv/jMTUrx1Q=" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
-              integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+        <link rel="stylesheet" href="<?= plugin_dir_url(__FILE__); ?>modules/leaflet/leaflet.css"/>
+        <link rel="stylesheet" href="<?= plugin_dir_url(__FILE__); ?>modules/pikaday2-datetimepicker/pikaday.css"/>
+        <link rel="stylesheet" href="<?= plugin_dir_url(__FILE__); ?>modules/font-awesome/css/font-awesome.min.css"/>
         <style>
             #habat_map_<?= $guid; ?> {
                 height: <?= intval($args['map_height']).'px'; ?>;
@@ -367,6 +363,14 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 border: solid 1px #703f3f;
             }
 
+            .pika-time th,
+            .pika-time td,
+            .pika-table th,
+            .pika-table td {
+                padding: 0;
+                border: none;
+            }
+
             <?php } ?>
         </style>
         <?= $args['map_header'] ? "<h4>" . $args['map_header'] . "</h4>" : "" ?>
@@ -376,13 +380,13 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
             ?>
             <div id="habat_map_filters_<?= $guid; ?>">
                 <div>
-                    <input type="text" id="call_sign_<?= $guid; ?>"
-                           placeholder="<?= __('Call Sign', 'high-altitude-balloon-aprs-plugin'); ?>" value="">
                     <label id="track_call_sign_box_<?= $guid; ?>" style="display: none">
                         <input type="checkbox" id="track_call_sign_<?= $guid; ?>"
                                title="<?= __('Call Sign', 'high-altitude-balloon-aprs-plugin'); ?>" value="1">
                         <?= __('Track', 'high-altitude-balloon-aprs-plugin'); ?>
                     </label>
+                    <input type="text" id="call_sign_<?= $guid; ?>"
+                           placeholder="<?= __('Call Sign', 'high-altitude-balloon-aprs-plugin'); ?>" value="">
                     <input type="text" id="from_<?= $guid; ?>"
                            placeholder="<?= __('From date', 'high-altitude-balloon-aprs-plugin'); ?>" value="">
                     <input type="text" id="to_<?= $guid; ?>"
@@ -405,15 +409,15 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
             <div id="habat_map_overlay_<?= $guid; ?>"></div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment-with-locales.min.js"
-                integrity="sha256-QwcluVRoJ33LzMJ+COPYcydsAIJzcxCwsa0zA5JRGEc=" crossorigin="anonymous"></script>
-
+        <script src="<?= plugin_dir_url(__FILE__); ?>modules/moment/moment-with-locales.min.js"></script>
+        <script src="<?= plugin_dir_url(__FILE__); ?>modules/leaflet/leaflet.js"></script>
+        <script src="<?= plugin_dir_url(__FILE__); ?>modules/pikaday2-datetimepicker/pikaday.js"></script>
         <script>
             var habat_map_<?= $guid; ?>,
                 habat_map_markers_<?= $guid; ?> = [],
                 habat_map_polylines_<?= $guid; ?> = [],
-                habat_map_from_<?= $guid; ?> = '<?= $args['from'] ? date('Y-m-d H:i', strtotime($args['from'])) : ''; ?>',
-                habat_map_to_<?= $guid; ?> = '<?= $args['to'] ? date('Y-m-d H:i', strtotime($args['to'])) : ''; ?>',
+                habat_map_from_<?= $guid; ?> = '<?= $args['from'] ? date('Y-m-d H:i:00', strtotime($args['from'])) : ''; ?>',
+                habat_map_to_<?= $guid; ?> = '<?= $args['to'] ? date('Y-m-d H:i:00', strtotime($args['to'])) : ''; ?>',
                 habat_updating_<?= $guid; ?> = false;
 
             function prevent_scroll_<?= $guid; ?>(e) {
@@ -558,10 +562,10 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 var hash = location.hash.substring(1),
                     dict = {};
 
-                if(hash.length > 0) {
-                    hash.split('&').map(function (item){
+                if (hash.length > 0) {
+                    hash.split('&').map(function (item) {
                         var pair = item.split('=');
-                        if(pair.length === 2) {
+                        if (pair.length === 2) {
                             dict[pair[0]] = pair[1];
                         }
                     });
@@ -572,11 +576,11 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
 
             function get_hash_<?= $guid; ?>(dict) {
                 var hash = '#', parts = [],
-                keys = Object.keys(dict);
+                    keys = Object.keys(dict);
 
-                if(keys.length > 0) {
-                    keys.forEach(function (key){
-                       parts.push([key, dict[key]].join('='))
+                if (keys.length > 0) {
+                    keys.forEach(function (key) {
+                        parts.push([key, dict[key]].join('='))
                     });
                 }
 
@@ -616,7 +620,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 if (hash_dict['call_sign'] !== undefined) {
                     document.getElementById('call_sign_<?= $guid; ?>').value = hash_dict['call_sign'];
                     document.getElementById('track_call_sign_box_<?= $guid; ?>').style.display = 'inline-block';
-                    if(hash_dict['track'] !== undefined) {
+                    if (hash_dict['track'] !== undefined) {
                         document.getElementById('track_call_sign_<?= $guid; ?>').checked = (hash_dict['track'] === '1');
                     }
                 } else {
@@ -624,18 +628,13 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                     document.getElementById('track_call_sign_<?= $guid; ?>').checked = false;
                 }
 
-                flatpickr('#from_<?= $guid; ?>', {
-                    enableTime: true,
-                    dateFormat: "Y-m-d H:i",
-                    time_24hr: true,
-                    defaultDate: habat_map_from_<?= $guid; ?> && habat_map_from_<?= $guid; ?>.length > 0 ? habat_map_from_<?= $guid; ?> : null
-
+                document.getElementById('from_<?= $guid; ?>').value = habat_map_from_<?= $guid; ?> && habat_map_from_<?= $guid; ?>.length > 0 ? habat_map_from_<?= $guid; ?> : '';
+                var from_date = new Pikaday({
+                    field: document.getElementById('from_<?= $guid; ?>')
                 });
-                flatpickr('#to_<?= $guid; ?>', {
-                    enableTime: true,
-                    dateFormat: "Y-m-d H:i",
-                    time_24hr: true,
-                    defaultDate: habat_map_to_<?= $guid; ?> && habat_map_to_<?= $guid; ?>.length > 0 ? habat_map_to_<?= $guid; ?> : null
+                document.getElementById('to_<?= $guid; ?>').value = habat_map_to_<?= $guid; ?> && habat_map_to_<?= $guid; ?>.length > 0 ? habat_map_to_<?= $guid; ?> : '';
+                var to_date = new Pikaday({
+                    field: document.getElementById('to_<?= $guid; ?>')
                 });
 
                 document.getElementById('call_sign_<?= $guid; ?>').onkeyup = function (e) {
@@ -646,7 +645,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                         hash_dict['call_sign'] = call_sign
                     } else {
                         document.getElementById('track_call_sign_box_<?= $guid; ?>').style.display = 'none';
-                        if(hash_dict['call_sign'] !== undefined) {
+                        if (hash_dict['call_sign'] !== undefined) {
                             delete hash_dict['call_sign'];
                         }
                     }
@@ -655,10 +654,10 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 document.getElementById('track_call_sign_<?= $guid; ?>').onchange = function (e) {
                     var hash_dict = get_hash_parts_<?= $guid; ?>();
                     var track = document.getElementById('track_call_sign_<?= $guid; ?>').checked;
-                    if(track) {
+                    if (track) {
                         hash_dict['track'] = '1';
                     } else {
-                        if(hash_dict['track'] !== undefined) {
+                        if (hash_dict['track'] !== undefined) {
                             delete hash_dict['track'];
                         }
                     }
@@ -670,11 +669,6 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 setInterval(habat_map_reload_data_<?= $guid; ?>, 60000);
             });
         </script>
-        <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-                integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-                crossorigin=""></script>
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"
-                integrity="sha256-Huqxy3eUcaCwqqk92RwusapTfWlvAasF6p2rxV6FJaE=" crossorigin="anonymous"></script>
         <?php
         $html = ob_get_clean();
 
