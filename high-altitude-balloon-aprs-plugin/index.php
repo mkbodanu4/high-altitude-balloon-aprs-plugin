@@ -488,13 +488,47 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                             iconAnchor: iconAnchor
                                         })
                                     }).addTo(habat_map_<?= $guid; ?>);
-                                    var packet_date = +new Date(packet.t * 1000);
-                                    marker.bindPopup('<div>' + moment(packet_date).fromNow() + '</div>' +
-                                        '<div class="habat_text_bold">' + call_sign + '</div>' +
-                                        '<div>' + moment(packet_date).format("LLL") + '</div>' +
-                                        (packet.s !== undefined && packet.s ? '<div><b><?= __('Speed', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.s + '</div>' : '') +
-                                        (packet.a !== undefined && packet.a ? '<div><b><?= __('Altitude', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.a + ' m</div>' : '') +
-                                        (packet.c !== undefined && packet.c ? '<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.c + '</div>' : ''));
+                                    var packet_date = +new Date(packet.t * 1000),
+                                        popup_content = '<div>' + moment(packet_date).fromNow() + '</div>' +
+                                            '<div class="habat_text_bold">' + call_sign + '</div>' +
+                                            '<div>' + moment(packet_date).format("LLL") + '</div>' +
+                                            (packet.s !== undefined && packet.s ? '<div><b><?= __('Speed', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.s + '</div>' : '') +
+                                            (packet.a !== undefined && packet.a ? '<div><b><?= __('Altitude', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.a + ' m</div>' : '');
+                                    if (packet.c !== undefined && packet.c) {
+                                        var frequencies = [], parts,
+                                            wspr_pattern = new RegExp(/\s(wspr)\s/i),
+                                            aprs_pattern = new RegExp(/(aprs)[\-|\s]{0,}(\d{3}\.\d{3}){0,}/i),
+                                            fsk_pattern = new RegExp(/(4\-{0,}fsk)[\-|\s]{0,}(\d{3}\.\d{3}){0,}/i),
+                                            sstv_pattern = new RegExp(/(sstv)[\-|\s]{0,}(\d{3}\.\d{3}){0,}/i);
+                                        if (wspr_pattern.test(packet.c)) {
+                                            parts = wspr_pattern.exec(packet.c);
+                                            frequencies.push('14,097 MHz ' + parts[1]);
+                                        }
+                                        if (aprs_pattern.test(packet.c)) {
+                                            parts = aprs_pattern.exec(packet.c);
+                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '') + parts[1]);
+                                        }
+                                        if (fsk_pattern.test(packet.c)) {
+                                            parts = fsk_pattern.exec(packet.c);
+                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '437.600 MHz') + parts[1]);
+                                        }
+                                        if (sstv_pattern.test(packet.c)) {
+                                            parts = sstv_pattern.exec(packet.c);
+                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '144.500 MHz <?= __('or', 'high-altitude-balloon-aprs-plugin'); ?> 433.400 MHz') + parts[1]);
+                                        }
+
+                                        popup_content += '<div>' +
+                                            '<b><?= __('Frequencies', 'high-altitude-balloon-aprs-plugin'); ?></b>: ';
+                                        if (frequencies.length > 0) {
+                                            popup_content += frequencies.join('; ')
+                                        } else {
+                                            popup_content += 'APRS'
+                                        }
+                                        popup_content += '</div>';
+
+                                        popup_content += '<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.c + '</div>';
+                                    }
+                                    marker.bindPopup(popup_content)
                                     habat_map_markers_<?= $guid; ?>.push(marker);
                                 });
 
@@ -594,12 +628,12 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                     return floatval($float);
                 }, explode(",", $args['map_center']))); ?>"), <?= $args['map_zoom'] && is_numeric($args['map_zoom']) ? $args['map_zoom'] : 5; ?>);
 
-                var southWest = new L.latLng(-90, -180),
-                    northEast = new L.latLng(90, 180);
-                var bounds = new L.latLngBounds(southWest, northEast);
-
-                habat_map_<?= $guid; ?>.setMaxBounds(bounds);
                 habat_map_<?= $guid; ?>.setMinZoom(1);
+
+                var southWest = new L.latLng(-135, -225),
+                    northEast = new L.latLng(135, 225);
+                var bounds = new L.latLngBounds(southWest, northEast);
+                habat_map_<?= $guid; ?>.setMaxBounds(bounds);
                 habat_map_<?= $guid; ?>.on('drag', function () {
                     habat_map_<?= $guid; ?>.panInsideBounds(bounds, {animate: false});
                 });

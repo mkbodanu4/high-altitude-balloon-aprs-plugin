@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: High Altitude Balloon APRS Tracker Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-08 12:27+0000\n"
+"POT-Creation-Date: 2022-08-11 09:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -21,7 +21,7 @@ msgid ""
 "Add map with High Altitude Balloons to your WordPress site with shortcodes."
 msgstr ""
 
-#: index.php:492
+#: index.php:496
 msgid "Altitude"
 msgstr ""
 
@@ -33,11 +33,11 @@ msgstr ""
 msgid "Attribute"
 msgstr ""
 
-#: index.php:380 index.php:383
+#: index.php:385 index.php:389
 msgid "Call Sign"
 msgstr ""
 
-#: index.php:493
+#: index.php:529
 msgid "Comment"
 msgstr ""
 
@@ -65,7 +65,11 @@ msgid ""
 "\"6 days ago\" etc)"
 msgstr ""
 
-#: index.php:387
+#: index.php:521
+msgid "Frequencies"
+msgstr ""
+
+#: index.php:391
 msgid "From date"
 msgstr ""
 
@@ -126,15 +130,19 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+#: index.php:517
+msgid "or"
+msgstr ""
+
 #: index.php:85
 msgid "Plugin Settings"
 msgstr ""
 
-#: index.php:395
+#: index.php:399
 msgid "Refresh map"
 msgstr ""
 
-#: index.php:391
+#: index.php:395
 msgid "Reset filters"
 msgstr ""
 
@@ -146,15 +154,15 @@ msgstr ""
 msgid "Show only last point on map, Yes or No"
 msgstr ""
 
-#: index.php:491
+#: index.php:495
 msgid "Speed"
 msgstr ""
 
-#: index.php:389
+#: index.php:393
 msgid "To date"
 msgstr ""
 
-#: index.php:384
+#: index.php:386
 msgid "Track"
 msgstr ""
 

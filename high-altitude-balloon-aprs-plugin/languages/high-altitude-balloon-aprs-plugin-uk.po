@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: High Altitude Balloon APRS Tracker Plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 15:20+0000\n"
-"PO-Revision-Date: 2022-08-08 12:28+0000\n"
+"PO-Revision-Date: 2022-08-11 09:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: Українська\n"
 "Language: uk\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Додайте карту Повітряних куль до вашого сайту на Wordpress за домогою "
 "коротких кодів."
 
-#: index.php:492
+#: index.php:496
 msgid "Altitude"
 msgstr "Висота"
 
@@ -35,11 +35,11 @@ msgstr "Ключ API"
 msgid "Attribute"
 msgstr "Атрибут"
 
-#: index.php:380 index.php:383
+#: index.php:385 index.php:389
 msgid "Call Sign"
 msgstr "Кличний знак"
 
-#: index.php:493
+#: index.php:529
 msgid "Comment"
 msgstr "Коментар"
 
@@ -71,7 +71,11 @@ msgstr ""
 "Фільтрувати дані починаючи до заданої дати (також підтримуються відносні "
 "дати типу \"1 hour ago\", \"6 days ago\")"
 
-#: index.php:387
+#: index.php:521
+msgid "Frequencies"
+msgstr "Частоти"
+
+#: index.php:391
 msgid "From date"
 msgstr "Від дати"
 
@@ -132,15 +136,19 @@ msgstr "Пропущені обов'язкові атрибути, переві�
 msgid "No"
 msgstr "Ні"
 
+#: index.php:517
+msgid "or"
+msgstr "або"
+
 #: index.php:85
 msgid "Plugin Settings"
 msgstr "Налаштування плагіна"
 
-#: index.php:395
+#: index.php:399
 msgid "Refresh map"
 msgstr "Оновити карту"
 
-#: index.php:391
+#: index.php:395
 msgid "Reset filters"
 msgstr "Відновити фільтри"
 
@@ -152,15 +160,15 @@ msgstr "Показувати форму з фільтрами над карто�
 msgid "Show only last point on map, Yes or No"
 msgstr "Показувати лише останню точку на карті, Yes або No"
 
-#: index.php:491
+#: index.php:495
 msgid "Speed"
 msgstr "Швидкість"
 
-#: index.php:389
+#: index.php:393
 msgid "To date"
 msgstr "До дати"
 
-#: index.php:384
+#: index.php:386
 msgid "Track"
 msgstr "Відслідковувати"
 

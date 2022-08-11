@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: High Altitude Balloon APRS Tracker Plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 15:20+0000\n"
-"PO-Revision-Date: 2022-08-08 12:27+0000\n"
+"PO-Revision-Date: 2022-08-11 09:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Add map with High Altitude Balloons to your WordPress site with shortcodes."
 
-#: index.php:492
+#: index.php:496
 msgid "Altitude"
 msgstr "Altitude"
 
@@ -33,11 +33,11 @@ msgstr "API Key"
 msgid "Attribute"
 msgstr "Attribute"
 
-#: index.php:380 index.php:383
+#: index.php:385 index.php:389
 msgid "Call Sign"
 msgstr "Call Sign"
 
-#: index.php:493
+#: index.php:529
 msgid "Comment"
 msgstr "Comment"
 
@@ -69,7 +69,11 @@ msgstr ""
 "Filter data till this date (also accept relative date like \"1 hour ago\", "
 "\"6 days ago\" etc)"
 
-#: index.php:387
+#: index.php:521
+msgid "Frequencies"
+msgstr "Frequencies"
+
+#: index.php:391
 msgid "From date"
 msgstr "From date"
 
@@ -130,15 +134,19 @@ msgstr "v"
 msgid "No"
 msgstr "No"
 
+#: index.php:517
+msgid "or"
+msgstr "or"
+
 #: index.php:85
 msgid "Plugin Settings"
 msgstr "Plugin Settings"
 
-#: index.php:395
+#: index.php:399
 msgid "Refresh map"
 msgstr "Refresh map"
 
-#: index.php:391
+#: index.php:395
 msgid "Reset filters"
 msgstr "From date"
 
@@ -150,15 +158,15 @@ msgstr "Show filters above map, Yes or No"
 msgid "Show only last point on map, Yes or No"
 msgstr "Show only last point on map, Yes or No"
 
-#: index.php:491
+#: index.php:495
 msgid "Speed"
 msgstr "Speed"
 
-#: index.php:389
+#: index.php:393
 msgid "To date"
 msgstr "To date"
 
-#: index.php:384
+#: index.php:386
 msgid "Track"
 msgstr "Track"
 
