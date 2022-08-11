@@ -492,6 +492,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         popup_content = '<div>' + moment(packet_date).fromNow() + '</div>' +
                                             '<div class="habat_text_bold">' + call_sign + '</div>' +
                                             '<div>' + moment(packet_date).format("LLL") + '</div>' +
+                                            '<br/>' +
                                             (packet.s !== undefined && packet.s ? '<div><b><?= __('Speed', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.s + '</div>' : '') +
                                             (packet.a !== undefined && packet.a ? '<div><b><?= __('Altitude', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.a + ' m</div>' : '');
                                     if (packet.c !== undefined && packet.c) {
@@ -526,7 +527,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         }
                                         popup_content += '</div>';
 
-                                        popup_content += '<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.c + '</div>';
+                                        popup_content += '<br/>' +'<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.c + '</div>';
                                     }
                                     marker.bindPopup(popup_content)
                                     habat_map_markers_<?= $guid; ?>.push(marker);
