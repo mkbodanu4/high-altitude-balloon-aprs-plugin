@@ -511,11 +511,11 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         }
                                         if (fsk_pattern.test(packet.c)) {
                                             parts = fsk_pattern.exec(packet.c);
-                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '437.600 MHz') + parts[1]);
+                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '437.600 MHz ') + parts[1]);
                                         }
                                         if (sstv_pattern.test(packet.c)) {
                                             parts = sstv_pattern.exec(packet.c);
-                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '144.500 MHz <?= __('or', 'high-altitude-balloon-aprs-plugin'); ?> 433.400 MHz') + parts[1]);
+                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '144.500 MHz <?= __('or', 'high-altitude-balloon-aprs-plugin'); ?> 433.400 MHz ') + parts[1]);
                                         }
 
                                         popup_content += '<div>' +
