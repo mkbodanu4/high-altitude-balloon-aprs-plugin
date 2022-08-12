@@ -499,6 +499,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         var frequencies = [], parts,
                                             wspr_pattern = new RegExp(/\s(wspr)\s/i),
                                             aprs_pattern = new RegExp(/(aprs)[\-|\s]{0,}(\d{3}\.\d{3}){0,}/i),
+                                            lora_pattern = new RegExp(/(lora)[\-|\s]{0,}(\d{3}\.\d{3}){0,}/i),
                                             fsk_pattern = new RegExp(/(4\-{0,}fsk)[\-|\s]{0,}(\d{3}\.\d{3}){0,}/i),
                                             sstv_pattern = new RegExp(/(sstv)[\-|\s]{0,}(\d{3}\.\d{3}){0,}/i);
                                         if (wspr_pattern.test(packet.c)) {
@@ -507,6 +508,10 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         }
                                         if (aprs_pattern.test(packet.c)) {
                                             parts = aprs_pattern.exec(packet.c);
+                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '') + parts[1]);
+                                        }
+                                        if (lora_pattern.test(packet.c)) {
+                                            parts = lora_pattern.exec(packet.c);
                                             frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '') + parts[1]);
                                         }
                                         if (fsk_pattern.test(packet.c)) {
