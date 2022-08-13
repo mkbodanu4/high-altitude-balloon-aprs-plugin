@@ -50,8 +50,8 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
     public function setting_page()
     {
         add_options_page(
-            __('High Altitude Balloon APRS Tracker Plugin Settings', 'high-altitude-balloon-aprs-plugin'),
-            __('High Altitude Balloon APRS Tracker Plugin', 'high-altitude-balloon-aprs-plugin'),
+            __('High Altitude Balloon Tracker Settings', 'high-altitude-balloon-aprs-plugin'),
+            __('High Altitude Balloon Tracker', 'high-altitude-balloon-aprs-plugin'),
             'manage_options',
             'habat-setting',
             array($this, 'html_form')
@@ -532,7 +532,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                         }
                                         popup_content += '</div>';
 
-                                        popup_content += '<br/>' +'<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.c + '</div>';
+                                        popup_content += '<br/>' + '<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.c + '</div>';
                                     }
                                     marker.bindPopup(popup_content)
                                     habat_map_markers_<?= $guid; ?>.push(marker);
@@ -645,7 +645,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 });
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap'
+                    attribution: '© <a target="_blank" href="https://diy.manko.pro">UR5WKM</a> | © <a target="_blank" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                 }).addTo(habat_map_<?= $guid; ?>);
 
                 /*
