@@ -1,15 +1,15 @@
 <?php
 /*
-Plugin Name:    High Altitude Balloon APRS Tracker Plugin
+Plugin Name:    High Altitude Balloon APRS Plugin
 Plugin URI:     https://github.com/mkbodanu4/high-altitude-balloon-aprs-plugin
-Description:    Add map with High Altitude Balloons to your WordPress site with shortcodes.
-Version:        1.0
+Description:    Add a map with Amateur Radio Balloons to your WordPress site with shortcodes.
+Version:        1.0.1
 Author:         UR5WKM
 Author URI:     https://diy.manko.pro
 Text Domain:    high-altitude-balloon-aprs-plugin
 */
 
-class High_Altitude_Balloon_APRS_Tracker_Plugin
+class High_Altitude_Balloon_APRS_Plugin
 {
     public function __construct()
     {
@@ -50,7 +50,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
     public function setting_page()
     {
         add_options_page(
-            __('High Altitude Balloon Tracker Settings', 'high-altitude-balloon-aprs-plugin'),
+            __('Plugin Settings', 'high-altitude-balloon-aprs-plugin'),
             __('High Altitude Balloon Tracker', 'high-altitude-balloon-aprs-plugin'),
             'manage_options',
             'habat-setting',
@@ -82,15 +82,15 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
             }
         </style>
         <div class="wrap">
-            <h2><?= __('Plugin Settings', 'high-altitude-balloon-aprs-plugin'); ?></h2>
+            <h2><?= __('High Altitude Balloon APRS Plugin', 'high-altitude-balloon-aprs-plugin'); ?></h2>
             <form method="post" action="options.php">
                 <?php settings_fields('habat_options_group'); ?>
-                <h3><?= __('High Altitude Balloon APRS Tracker Monitor', 'high-altitude-balloon-aprs-plugin'); ?></h3>
+                <h3><?= __('API Settings', 'high-altitude-balloon-aprs-plugin'); ?></h3>
                 <table class="form-table">
                     <tr>
                         <th>
                             <label for="habat_frontend_url">
-                                <?= __('URL to High Altitude Balloon APRS Tracker API', 'high-altitude-balloon-aprs-plugin') . ":"; ?>
+                                <?= __('URL', 'high-altitude-balloon-aprs-plugin') . ":"; ?>
                             </label>
                         </th>
                         <td>
@@ -117,7 +117,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                 <div>
                     <div class="habat_shortcode">
                         [<b>hab_tracker_map</b>
-                        map_header="<i><?= __('High Altitude Balloon APRS Tracker', 'high-altitude-balloon-aprs-plugin'); ?></i>"
+                        map_header="<i><?= __('Amateur Radio Balloons Tracker', 'high-altitude-balloon-aprs-plugin'); ?></i>"
                         show_filters="<i>Yes</i>"
                         only_last_point="<i>No</i>"
                         from="<i>1 hour ago</i>"
@@ -151,7 +151,7 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
                                 <?= __('No', 'high-altitude-balloon-aprs-plugin'); ?>
                             </td>
                             <td>
-                                <?= __('High Altitude Balloon APRS Tracker', 'high-altitude-balloon-aprs-plugin'); ?>
+                                <?= __('Amateur Radio Balloons Tracker', 'high-altitude-balloon-aprs-plugin'); ?>
                             </td>
                         </tr>
                         <tr>
@@ -798,4 +798,4 @@ class High_Altitude_Balloon_APRS_Tracker_Plugin
     }
 }
 
-$High_Altitude_Balloon_APRS_Tracker_Plugin = new High_Altitude_Balloon_APRS_Tracker_Plugin();
+$High_Altitude_Balloon_APRS_Plugin = new High_Altitude_Balloon_APRS_Plugin();
