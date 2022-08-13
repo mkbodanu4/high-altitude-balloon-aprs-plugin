@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: High Altitude Balloon APRS Tracker Plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 15:20+0000\n"
-"PO-Revision-Date: 2022-08-11 09:27+0000\n"
+"PO-Revision-Date: 2022-08-13 00:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Add map with High Altitude Balloons to your WordPress site with shortcodes."
 
-#: index.php:496
+#: index.php:497
 msgid "Altitude"
 msgstr "Altitude"
 
@@ -37,7 +37,7 @@ msgstr "Attribute"
 msgid "Call Sign"
 msgstr "Call Sign"
 
-#: index.php:529
+#: index.php:535
 msgid "Comment"
 msgstr "Comment"
 
@@ -69,7 +69,7 @@ msgstr ""
 "Filter data till this date (also accept relative date like \"1 hour ago\", "
 "\"6 days ago\" etc)"
 
-#: index.php:521
+#: index.php:527
 msgid "Frequencies"
 msgstr "Frequencies"
 
@@ -86,13 +86,16 @@ msgid "High Altitude Balloon APRS Tracker Monitor"
 msgstr "High Altitude Balloon APRS Tracker Monitor"
 
 #. Name of the plugin
-#: index.php:54
 msgid "High Altitude Balloon APRS Tracker Plugin"
 msgstr "High Altitude Balloon APRS Tracker Plugin"
 
+#: index.php:54
+msgid "High Altitude Balloon Tracker"
+msgstr "High Altitude Balloon Tracker"
+
 #: index.php:53
-msgid "High Altitude Balloon APRS Tracker Plugin Settings"
-msgstr "High Altitude Balloon APRS Tracker Plugin Settings"
+msgid "High Altitude Balloon Tracker Settings"
+msgstr "High Altitude Balloon Tracker Settings"
 
 #. Author URI of the plugin
 msgid "https://diy.manko.pro"
@@ -134,7 +137,7 @@ msgstr "v"
 msgid "No"
 msgstr "No"
 
-#: index.php:517
+#: index.php:523
 msgid "or"
 msgstr "or"
 
@@ -158,7 +161,7 @@ msgstr "Show filters above map, Yes or No"
 msgid "Show only last point on map, Yes or No"
 msgstr "Show only last point on map, Yes or No"
 
-#: index.php:495
+#: index.php:496
 msgid "Speed"
 msgstr "Speed"
 
