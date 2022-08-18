@@ -466,7 +466,7 @@ class High_Altitude_Balloon_APRS_Plugin
         <div id="habat_map_box_<?= $guid; ?>">
             <div id="habat_map_<?= $guid; ?>"></div>
             <?php if ($args['map_header']) { ?>
-                <div id="habat_map_header_box_<?= $guid; ?>">
+                <div id="habat_map_header_box_<?= $guid; ?>" style="display: none;">
                     <div id="habat_map_header_<?= $guid; ?>">
                         <?php if ($args['map_header_link']) { ?><a href="<?= $args['map_header_link']; ?>"
                                                                    target="_blank"><?php } ?>
@@ -476,7 +476,7 @@ class High_Altitude_Balloon_APRS_Plugin
                 </div>
             <?php } ?>
             <?php if (strtolower($args['show_filters']) === "yes") { ?>
-                <div id="habat_map_filters_<?= $guid; ?>">
+                <div id="habat_map_filters_<?= $guid; ?>" style="display: none;">
                     <div>
                         <label id="track_call_sign_box_<?= $guid; ?>" style="display: none">
                             <input type="checkbox" id="track_call_sign_<?= $guid; ?>"
@@ -851,6 +851,14 @@ class High_Altitude_Balloon_APRS_Plugin
                     }
                     window.location.hash = get_hash_<?= $guid; ?>(hash_dict);
                 };
+                <?php } ?>
+
+                <?php if ($args['map_header']) { ?>
+                document.getElementById('habat_map_header_box_<?= $guid; ?>').style.display = 'block';
+                <?php } ?>
+
+                <?php if (strtolower($args['show_filters']) === "yes") { ?>
+                document.getElementById('habat_map_filters_<?= $guid; ?>').style.display = 'block';
                 <?php } ?>
 
                 habat_map_reload_data_<?= $guid; ?>();
