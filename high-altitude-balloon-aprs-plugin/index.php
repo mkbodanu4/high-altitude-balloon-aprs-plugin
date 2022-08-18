@@ -118,8 +118,10 @@ class High_Altitude_Balloon_APRS_Plugin
                     <div class="habat_shortcode">
                         [<b>hab_tracker_map</b>
                         map_header="<i><?= __('Amateur Radio Balloons Tracker', 'high-altitude-balloon-aprs-plugin'); ?></i>"
+                        map_header_link="<i>https://diy.manko.pro/high-altitude-balloon/</i>"
                         show_filters="<i>Yes</i>"
                         only_last_point="<i>No</i>"
+                        short_details="<i>No</i>"
                         from="<i>1 hour ago</i>"
                         map_height="<i>480</i>"
                         map_zoom="<i>1</i>"
@@ -156,6 +158,20 @@ class High_Altitude_Balloon_APRS_Plugin
                         </tr>
                         <tr>
                             <td>
+                                <i>map_header_link</i>
+                            </td>
+                            <td>
+                                <?= __('URL to be used in map header text', 'high-altitude-balloon-aprs-plugin'); ?>
+                            </td>
+                            <td>
+                                <?= __('No', 'high-altitude-balloon-aprs-plugin'); ?>
+                            </td>
+                            <td>
+                                <?= __('https://diy.manko.pro/', 'high-altitude-balloon-aprs-plugin'); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <i>show_filters</i>
                             </td>
                             <td>
@@ -184,10 +200,24 @@ class High_Altitude_Balloon_APRS_Plugin
                         </tr>
                         <tr>
                             <td>
+                                <i>short_details</i>
+                            </td>
+                            <td>
+                                <?= __('Show only call sign in details popup, Yes or No', 'high-altitude-balloon-aprs-plugin'); ?>
+                            </td>
+                            <td>
+                                <?= __('No', 'high-altitude-balloon-aprs-plugin'); ?>
+                            </td>
+                            <td>
+                                No
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <i>from</i>
                             </td>
                             <td>
-                                <?= __('Filter data starting from this date (also accept relative date like "1 hour ago", "6 days ago" etc)', 'high-altitude-balloon-aprs-plugin'); ?>
+                                <?= __('Filter data starting from this date (format YYYY-MM-DD HH:MM:SS), also accept relative date like "1 hour ago", "6 days ago" etc', 'high-altitude-balloon-aprs-plugin'); ?>
                             </td>
                             <td>
                                 <?= __('No', 'high-altitude-balloon-aprs-plugin'); ?>
@@ -201,7 +231,7 @@ class High_Altitude_Balloon_APRS_Plugin
                                 <i>to</i>
                             </td>
                             <td>
-                                <?= __('Filter data till this date (also accept relative date like "1 hour ago", "6 days ago" etc)', 'high-altitude-balloon-aprs-plugin'); ?>
+                                <?= __('Filter data till this date (format YYYY-MM-DD HH:MM:SS), also accept relative date like "1 hour ago", "6 days ago" etc', 'high-altitude-balloon-aprs-plugin'); ?>
                             </td>
                             <td>
                                 <?= __('No', 'high-altitude-balloon-aprs-plugin'); ?>
@@ -267,8 +297,10 @@ class High_Altitude_Balloon_APRS_Plugin
 
         $args = shortcode_atts(array(
             'map_header' => '',
+            'map_header_link' => '',
             'show_filters' => 'Yes',
             'only_last_point' => 'No',
+            'short_details' => 'No',
             'from' => '',
             'to' => '',
             'map_height' => 480,
@@ -286,14 +318,20 @@ class High_Altitude_Balloon_APRS_Plugin
         <link rel="stylesheet" href="<?= plugin_dir_url(__FILE__); ?>modules/pikaday2-datetimepicker/pikaday.css"/>
         <link rel="stylesheet" href="<?= plugin_dir_url(__FILE__); ?>modules/font-awesome/css/font-awesome.min.css"/>
         <style>
-            #habat_map_<?= $guid; ?> {
+            #habat_map_box_<?= $guid; ?> {
+                position: relative;
                 height: <?= intval($args['map_height']).'px'; ?>;
             }
 
+            #habat_map_<?= $guid; ?> {
+                height: 100%;
+            }
+
             #habat_map_overlay_<?= $guid; ?> {
-                position: relative;
-                margin-top: <?= '-'.intval($args['map_height']).'px'; ?>;
-                height: <?= intval($args['map_height']).'px'; ?>;
+                position: absolute;
+                top: 0;
+                height: 100%;
+                width: 100%;
                 background-color: #fff;
                 z-index: 999999;
                 opacity: 0.4;
@@ -304,10 +342,33 @@ class High_Altitude_Balloon_APRS_Plugin
                 font-weight: bold;
             }
 
+            <?php if ($args['map_header']) { ?>
+            #habat_map_header_box_<?= $guid; ?> {
+                position: absolute;
+                top: 10px;
+                z-index: 401;
+                text-align: center;
+                width: 100%;
+            }
+
+            #habat_map_header_<?= $guid; ?> {
+                display: inline-block;
+                background: #ffffffdb;
+                box-shadow: 0 0 3px #9d9d9d;
+                border: 0;
+                border-radius: 5px;
+                padding: 5px;
+            }
+
+            <?php } ?>
+
             <?php if (strtolower($args['show_filters']) === "yes") { ?>
             #habat_map_filters_<?= $guid; ?> {
-                padding: 5px 0;
-                text-align: right;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                z-index: 401;
+                margin-left: 60px;
             }
 
             #call_sign_<?= $guid; ?>,
@@ -315,24 +376,45 @@ class High_Altitude_Balloon_APRS_Plugin
             #to_<?= $guid; ?> {
                 max-width: 140px;
                 text-align: center;
+                margin-bottom: 4px;
+                box-shadow: 0 0 3px #9d9d9d;
             }
 
-            #refresh_<?= $guid; ?> {
+            #track_call_sign_box_<?= $guid; ?> {
                 font-family: "Roboto", "Open Sans", sans-serif;
                 font-weight: 400;
-                padding: 10px 12px;
+                padding: 7px 3px;
                 min-height: 37px;
-                background: #185345;
-                color: #fff;
-                border: solid 1px #185345;
+                background: #F7F7F7;
+                color: #333333;
+                border: solid 1px #D4D4D4;
                 border-radius: 0;
                 -webkit-appearance: none;
                 -webkit-transition: background 0.2s;
                 transition: background 0.2s;
             }
 
+            #refresh_<?= $guid; ?>,
+            #reset_<?= $guid; ?> {
+                font-family: "Roboto", "Open Sans", sans-serif;
+                font-weight: 400;
+                padding: 10px 12px;
+                min-height: 37px;
+                border-radius: 0;
+                -webkit-appearance: none;
+                -webkit-transition: background 0.2s;
+                transition: background 0.2s;
+                box-shadow: 0 0 3px #9d9d9d;
+            }
+
+            #refresh_<?= $guid; ?> {
+                background: #185345;
+                color: #fff;
+                border: solid 1px #185345;
+            }
+
             #refresh_<?= $guid; ?>:hover {
-                background: #1d362e;
+                background: #101e1a;
             }
 
             #refresh_<?= $guid; ?>:disabled {
@@ -341,21 +423,13 @@ class High_Altitude_Balloon_APRS_Plugin
             }
 
             #reset_<?= $guid; ?> {
-                font-family: "Roboto", "Open Sans", sans-serif;
-                font-weight: 400;
-                padding: 10px 12px;
-                min-height: 37px;
                 background: #531818;
                 color: #fff;
                 border: solid 1px #531818;
-                border-radius: 0;
-                -webkit-appearance: none;
-                -webkit-transition: background 0.2s;
-                transition: background 0.2s;
             }
 
             #reset_<?= $guid; ?>:hover {
-                background: #3f2121;
+                background: #261414;
             }
 
             #reset_<?= $guid; ?>:disabled {
@@ -371,41 +445,62 @@ class High_Altitude_Balloon_APRS_Plugin
                 border: none;
             }
 
+            @media screen and (max-width: 400px) {
+                #call_sign_<?= $guid; ?>,
+                #from_<?= $guid; ?>,
+                #to_<?= $guid; ?> {
+                    min-height: 25px;
+                    font-weight: normal;
+                    padding: 0;
+                }
+
+                #refresh_<?= $guid; ?>,
+                #reset_<?= $guid; ?> {
+                    padding: 2px 5px;
+                    min-height: 25px;
+                }
+            }
+
             <?php } ?>
         </style>
-        <?= $args['map_header'] ? "<h4>" . $args['map_header'] . "</h4>" : "" ?>
-
-        <?php
-        if (strtolower($args['show_filters']) === "yes") {
-            ?>
-            <div id="habat_map_filters_<?= $guid; ?>">
-                <div>
-                    <label id="track_call_sign_box_<?= $guid; ?>" style="display: none">
-                        <input type="checkbox" id="track_call_sign_<?= $guid; ?>"
-                               title="<?= __('Call Sign', 'high-altitude-balloon-aprs-plugin'); ?>" value="1">
-                        <?= __('Track', 'high-altitude-balloon-aprs-plugin'); ?>
-                    </label>
-                    <input type="text" id="call_sign_<?= $guid; ?>"
-                           placeholder="<?= __('Call Sign', 'high-altitude-balloon-aprs-plugin'); ?>" value="">
-                    <input type="text" id="from_<?= $guid; ?>"
-                           placeholder="<?= __('From date', 'high-altitude-balloon-aprs-plugin'); ?>" value="">
-                    <input type="text" id="to_<?= $guid; ?>"
-                           placeholder="<?= __('To date', 'high-altitude-balloon-aprs-plugin'); ?>" value="">
-                    <button onclick="habat_map_reset_<?= $guid; ?>();" id="reset_<?= $guid; ?>"
-                            title="<?= __('Reset filters', 'high-altitude-balloon-aprs-plugin'); ?>">
-                        <i class="fa fa-times"></i>
-                    </button>
-                    <button onclick="habat_map_reload_data_<?= $guid; ?>(true);" id="refresh_<?= $guid; ?>"
-                            title="<?= __('Refresh map', 'high-altitude-balloon-aprs-plugin'); ?>">
-                        <i class="fa fa-refresh"></i>
-                    </button>
-                </div>
-            </div>
-            <?php
-        }
-        ?>
         <div id="habat_map_box_<?= $guid; ?>">
             <div id="habat_map_<?= $guid; ?>"></div>
+            <?php if ($args['map_header']) { ?>
+                <div id="habat_map_header_box_<?= $guid; ?>">
+                    <div id="habat_map_header_<?= $guid; ?>">
+                        <?php if ($args['map_header_link']) { ?><a href="<?= $args['map_header_link']; ?>"
+                                                                   target="_blank"><?php } ?>
+                            <?= $args['map_header']; ?>
+                            <?php if ($args['map_header_link']) { ?></a><?php } ?>
+                    </div>
+                </div>
+            <?php } ?>
+            <?php if (strtolower($args['show_filters']) === "yes") { ?>
+                <div id="habat_map_filters_<?= $guid; ?>">
+                    <div>
+                        <label id="track_call_sign_box_<?= $guid; ?>" style="display: none">
+                            <input type="checkbox" id="track_call_sign_<?= $guid; ?>"
+                                   title="<?= __('Call Sign', 'high-altitude-balloon-aprs-plugin'); ?>" value="1">
+                            <?= __('Track', 'high-altitude-balloon-aprs-plugin'); ?>
+                        </label>
+                        <input type="text" id="call_sign_<?= $guid; ?>"
+                               placeholder="<?= __('Call Sign', 'high-altitude-balloon-aprs-plugin'); ?>" value="">
+                        <input type="text" id="from_<?= $guid; ?>"
+                               placeholder="<?= __('From date', 'high-altitude-balloon-aprs-plugin'); ?>"
+                               value="">
+                        <input type="text" id="to_<?= $guid; ?>"
+                               placeholder="<?= __('To date', 'high-altitude-balloon-aprs-plugin'); ?>" value="">
+                        <button onclick="habat_map_reset_<?= $guid; ?>();" id="reset_<?= $guid; ?>"
+                                title="<?= __('Reset filters', 'high-altitude-balloon-aprs-plugin'); ?>">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <button onclick="habat_map_reload_data_<?= $guid; ?>(true);" id="refresh_<?= $guid; ?>"
+                                title="<?= __('Refresh map', 'high-altitude-balloon-aprs-plugin'); ?>">
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                    </div>
+                </div>
+            <?php } ?>
             <div id="habat_map_overlay_<?= $guid; ?>"></div>
         </div>
 
@@ -416,8 +511,8 @@ class High_Altitude_Balloon_APRS_Plugin
             var habat_map_<?= $guid; ?>,
                 habat_map_markers_<?= $guid; ?> = [],
                 habat_map_polylines_<?= $guid; ?> = [],
-                habat_map_from_<?= $guid; ?> = '<?= $args['from'] ? date('Y-m-d H:i:00', strtotime($args['from'])) : ''; ?>',
-                habat_map_to_<?= $guid; ?> = '<?= $args['to'] ? date('Y-m-d H:i:00', strtotime($args['to'])) : ''; ?>',
+                habat_map_from_<?= $guid; ?> = '',
+                habat_map_to_<?= $guid; ?> = '',
                 habat_updating_<?= $guid; ?> = false,
                 habat_interval_<?= $guid; ?>;
 
@@ -519,11 +614,13 @@ class High_Altitude_Balloon_APRS_Plugin
                                     }).addTo(habat_map_<?= $guid; ?>);
                                     var packet_date = +new Date(packet.t * 1000),
                                         popup_content = '<div>' + moment(packet_date).fromNow() + '</div>' +
-                                            '<div class="habat_text_bold">' + call_sign + '</div>' +
-                                            '<div>' + moment(packet_date).format("LLL") + '</div>' +
-                                            '<br/>' +
-                                            (packet.s !== undefined && packet.s ? '<div><b><?= __('Speed', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.s + '</div>' : '') +
-                                            (packet.a !== undefined && packet.a ? '<div><b><?= __('Altitude', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.a + ' m</div>' : '');
+                                            '<div class="habat_text_bold">' + call_sign + '</div>';
+
+                                    <?php if (strtolower($args['short_details']) !== "yes") { ?>
+                                    popup_content += '<div>' + moment(packet_date).format("LLL") + '</div>' +
+                                        '<br/>' +
+                                        (packet.s !== undefined && packet.s ? '<div><b><?= __('Speed', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.s + '</div>' : '') +
+                                        (packet.a !== undefined && packet.a ? '<div><b><?= __('Altitude', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.a + ' m</div>' : '');
                                     if (packet.c !== undefined && packet.c) {
                                         var frequencies = [], parts,
                                             wspr_pattern = new RegExp(/\s(wspr)\s/i),
@@ -563,6 +660,8 @@ class High_Altitude_Balloon_APRS_Plugin
 
                                         popup_content += '<br/>' + '<div><b><?= __('Comment', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.c + '</div>';
                                     }
+                                    <?php } ?>
+
                                     marker.bindPopup(popup_content)
                                     habat_map_markers_<?= $guid; ?>.push(marker);
 
@@ -603,15 +702,18 @@ class High_Altitude_Balloon_APRS_Plugin
                 xhttp_params.north_east_lng = habat_map_<?= $guid; ?>.getBounds().getNorthEast().lng;
                 */
                 <?php if (strtolower($args['show_filters']) === "yes") { ?>
-                if (document.getElementById('from_<?= $guid; ?>').value)
-                    xhttp_params.from = document.getElementById('from_<?= $guid; ?>').value;
-                if (document.getElementById('to_<?= $guid; ?>').value)
-                    xhttp_params.to = document.getElementById('to_<?= $guid; ?>').value;
-                if (document.getElementById('call_sign_<?= $guid; ?>').value)
+                if (document.getElementById('from_<?= $guid; ?>').value) {
+                    xhttp_params.from = moment.utc(new Date(document.getElementById('from_<?= $guid; ?>').value).toUTCString()).format('YYYY-MM-DD HH:mm:ss');
+                }
+                if (document.getElementById('to_<?= $guid; ?>').value) {
+                    xhttp_params.to = moment.utc(new Date(document.getElementById('to_<?= $guid; ?>').value).toUTCString()).format('YYYY-MM-DD HH:mm:ss');
+                }
+                if (document.getElementById('call_sign_<?= $guid; ?>').value) {
                     xhttp_params.call_sign = document.getElementById('call_sign_<?= $guid; ?>').value;
+                }
                 <?php } else { ?>
-                xhttp_params.from = habat_map_from_<?= $guid; ?>;
-                xhttp_params.to = habat_map_to_<?= $guid; ?>;
+                xhttp_params.from = habat_map_from_<?= $guid; ?>.length > 0 ? moment.utc(new Date(habat_map_from_<?= $guid; ?>).toUTCString()).format('YYYY-MM-DD HH:mm:ss') : '';
+                xhttp_params.to = habat_map_to_<?= $guid; ?>.length > 0 ? moment.utc(new Date(habat_map_to_<?= $guid; ?>).toUTCString()).format('YYYY-MM-DD HH:mm:ss') : '';
                 <?php } ?>
                 <?php if (strtolower($args['only_last_point']) === "yes") { ?>
                 xhttp_params.only_last_point = true;
@@ -621,8 +723,12 @@ class High_Altitude_Balloon_APRS_Plugin
 
             <?php if (strtolower($args['show_filters']) === "yes") { ?>
             function habat_map_reset_<?= $guid; ?>() {
-                habat_map_from_<?= $guid; ?> = '<?= $args['from'] ? date('Y-m-d H:i:00', strtotime($args['from'])) : ''; ?>';
-                habat_map_to_<?= $guid; ?> = '<?= $args['to'] ? date('Y-m-d H:i:00', strtotime($args['to'])) : ''; ?>';
+                <?php if($args['from']) { ?>
+                habat_map_from_<?= $guid; ?> = moment.utc('<?=  date('Y-m-d H:i:00', strtotime($args['from'])); ?>').local().format("YYYY-MM-DD HH:mm:ss");
+                <?php  } ?>
+                <?php if($args['to']) { ?>
+                habat_map_to_<?= $guid; ?> = moment.utc('<?= date('Y-m-d H:i:00', strtotime($args['to'])); ?>').local().format("YYYY-MM-DD HH:mm:ss");
+                <?php  } ?>
 
                 document.getElementById('call_sign_<?= $guid; ?>').value = '';
                 document.getElementById('track_call_sign_<?= $guid; ?>').checked = false;
@@ -664,6 +770,13 @@ class High_Altitude_Balloon_APRS_Plugin
 
             document.addEventListener("DOMContentLoaded", function (event) {
                 moment.locale("<?=get_locale();?>");
+
+                <?php if($args['from']) { ?>
+                habat_map_from_<?= $guid; ?> = moment.utc('<?=  date('Y-m-d H:i:00', strtotime($args['from'])); ?>').local().format("YYYY-MM-DD HH:mm:ss");
+                <?php  } ?>
+                <?php if($args['to']) { ?>
+                habat_map_to_<?= $guid; ?> = moment.utc('<?= date('Y-m-d H:i:00', strtotime($args['to'])); ?>').local().format("YYYY-MM-DD HH:mm:ss");
+                <?php  } ?>
 
                 habat_map_<?= $guid; ?> = L.map('habat_map_<?= $guid; ?>').setView(JSON.parse("<?= json_encode(array_map(function ($float) {
                     return floatval($float);
