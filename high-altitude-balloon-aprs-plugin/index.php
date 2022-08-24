@@ -623,38 +623,38 @@ class High_Altitude_Balloon_APRS_Plugin
                                         (packet.a !== undefined && packet.a ? '<div><b><?= __('Altitude', 'high-altitude-balloon-aprs-plugin'); ?></b>: ' + packet.a + ' m</div>' : '');
                                     if (packet.c !== undefined && packet.c) {
                                         var frequencies = [], parts,
-                                            wspr_pattern = new RegExp(/\s(wspr)\s/i),
-                                            aprs_pattern = new RegExp(/(aprs)[\-|\s]{0,}(\d{3}\.\d{3}){0,}/i),
-                                            lora_pattern = new RegExp(/(lora)[\-|\s]{0,}(\d{3}\.\d{3}){0,}/i),
-                                            fsk_pattern = new RegExp(/(4\-{0,}fsk)[\-|\s]{0,}(\d{3}\.\d{3}){0,}/i),
-                                            sstv_pattern = new RegExp(/(sstv)[\-|\s]{0,}(\d{3}\.\d{3}){0,}/i);
+                                            wspr_pattern = new RegExp(/\s{0,}(wspr)\s{0,}/i),
+                                            aprs_pattern = new RegExp(/(aprs)[\-\s\@]{0,}(\d{3}\.\d{3}){0,}/i),
+                                            lora_pattern = new RegExp(/(lora)[\-\s\@]{0,}(\d{3}\.\d{3}){0,}/i),
+                                            fsk_pattern = new RegExp(/(4\-{0,}fsk)[\-\s\@]{0,}(\d{3}\.\d{3}){0,}/i),
+                                            sstv_pattern = new RegExp(/(sstv)[\-\s\@]{0,}(\d{3}\.\d{3}){0,}/i);
                                         if (wspr_pattern.test(packet.c)) {
                                             parts = wspr_pattern.exec(packet.c);
-                                            frequencies.push('14,097 MHz ' + parts[1]);
+                                            frequencies.push('14,097 MHz ' + '<i>(' + parts[1] + ')</i>');
                                         }
                                         if (aprs_pattern.test(packet.c)) {
                                             parts = aprs_pattern.exec(packet.c);
-                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '') + parts[1]);
+                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '') + '<i>(' + parts[1] + ')</i>');
                                         }
                                         if (lora_pattern.test(packet.c)) {
                                             parts = lora_pattern.exec(packet.c);
-                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '') + parts[1]);
+                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '') + '<i>(' + parts[1] + ')</i>');
                                         }
                                         if (fsk_pattern.test(packet.c)) {
                                             parts = fsk_pattern.exec(packet.c);
-                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '437.600 MHz ') + parts[1]);
+                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '437.600 MHz ') + '<i>(' + parts[1] + ')</i>');
                                         }
                                         if (sstv_pattern.test(packet.c)) {
                                             parts = sstv_pattern.exec(packet.c);
-                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '144.500 MHz <?= __('or', 'high-altitude-balloon-aprs-plugin'); ?> 433.400 MHz ') + parts[1]);
+                                            frequencies.push((parts[2] !== undefined ? parts[2] + ' MHz ' : '144.500 MHz <?= __('or', 'high-altitude-balloon-aprs-plugin'); ?> 433.400 MHz ') + '<i>(' + parts[1] + ')</i>');
                                         }
 
                                         popup_content += '<div>' +
                                             '<b><?= __('Frequencies', 'high-altitude-balloon-aprs-plugin'); ?></b>: ';
                                         if (frequencies.length > 0) {
-                                            popup_content += frequencies.join('; ')
+                                            popup_content += frequencies.join('<br/>')
                                         } else {
-                                            popup_content += 'APRS'
+                                            popup_content += '<i>(APRS)</i>'
                                         }
                                         popup_content += '</div>';
 
